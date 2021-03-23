@@ -1,6 +1,6 @@
 ﻿using LibraryService.Data.Domain;
 
-namespace CourseWork6sem.Domain.Core.Entities
+namespace LibraryService.Domain.Core.Entities
 {
     public class Author : KeyedEntityBase
     {
