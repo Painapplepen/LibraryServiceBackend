@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using LibraryService.Data.EF.SQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +24,8 @@ namespace LibraryService
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LibraryServiceDbContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("LibraryServiceDbContext")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

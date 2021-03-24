@@ -8,10 +8,12 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
     {
         public void Configure(EntityTypeBuilder<BookFund> builder)
         {
-            builder.Property("Authors");
+            builder.Property("BookFund");
             builder.HasKey(c => c.Id);
 
-           
+            builder.Property(c => c.Amount).IsRequired();
+            builder.HasOne(c => c.Book).WithMany();
+            builder.HasOne(c => c.Library).WithMany();
         }
     }
 }
