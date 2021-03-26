@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IncomingOutgoing\" />
+    <Folder Include="IncomingOutgoing\Admin\" />
     <Folder Include="Incoming\" />
     <Folder Include="Outgoing\" />
   </ItemGroup>
