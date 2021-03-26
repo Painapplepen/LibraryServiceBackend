@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LibraryService.API.Application;
 
 namespace LibraryService.API.Host
 {
@@ -20,7 +21,8 @@ namespace LibraryService.API.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LibraryServiceDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("LibraryServiceDbContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("LibraryServiceDbContext")));
+            services.AddLibraryServiceApplication();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
