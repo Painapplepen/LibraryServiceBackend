@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace LibraryService.Data.Services.Abstraction
         Task<TEntity> GetAsync(long id);
         Task<TEntity> InsertAsync(TEntity newEntity);
         Task<TEntity> UpdateAsync(long id, TEntity newEntity);
-        Task<long> DeleteAsync(TEntity newEntity);
+        Task<bool> DeleteAsync(long id);
     }
 
     public abstract class BaseService<TContext, TEntity> : IBaseService<TEntity>, IDisposable
@@ -28,12 +29,12 @@ namespace LibraryService.Data.Services.Abstraction
 
         public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await dbSet.AsNoTracking().ToListAsync();
         }
 
         public async Task<TEntity> GetAsync(long id)
         {
-            throw new System.NotImplementedException();
+            return await dbSet.FindAsync(id);
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity)
@@ -47,11 +48,20 @@ namespace LibraryService.Data.Services.Abstraction
         public async Task<TEntity> UpdateAsync(long id, TEntity newEntity)
         {
             throw new System.NotImplementedException();
+            //var result = await dbSet.FindAsync(id);
         }
 
-        public async Task<long> DeleteAsync(TEntity newEntity)
+        public async Task<bool> DeleteAsync(long id)
         {
-            throw new System.NotImplementedException();
+            var result = dbSet.Remove(await dbSet.FindAsync(id));
+            
+            if (result != null)
+            {
+                Save();
+                return true;
+            }
+
+            return false;
         }
 
         public void Save()
