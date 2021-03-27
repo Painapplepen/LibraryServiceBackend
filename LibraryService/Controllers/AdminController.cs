@@ -47,7 +47,7 @@ namespace LibraryService.API.Host.Controllers
 
         [HttpPut("{id}")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AdminDTO))]
-        [SwaggerOperation(Summary = "Update a admin", OperationId = "UpdateProspect")]
+        [SwaggerOperation(Summary = "Update a admin", OperationId = "UpdateAdmin")]
         public async Task<IActionResult> UpdateAdmin([FromRoute] long id, [FromBody] AdminDTO admin, CancellationToken cancellationToken = default)
         {
             return await ExecuteCommandAsync(new UpdateAdminCommand(id, admin), cancellationToken: cancellationToken);
@@ -55,8 +55,8 @@ namespace LibraryService.API.Host.Controllers
 
         [HttpGet]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AdminDTO))]
-        [SwaggerOperation(Summary = "Get the details of a prospect", OperationId = "GetProspect")]
-        public async Task<IActionResult> GetProspect([FromBody] AdminDTO admin, CancellationToken cancellationToken = default)
+        [SwaggerOperation(Summary = "Get the details of a prospect", OperationId = "GetAdmin")]
+        public async Task<IActionResult> GetAdmin([FromBody] AdminDTO admin, CancellationToken cancellationToken = default)
         {
             return await ExecuteQueryAsync(new ExistAdminQuery(admin), cancellationToken: cancellationToken);
         }
