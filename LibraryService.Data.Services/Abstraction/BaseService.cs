@@ -2,34 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryService.Data.EF.SQL;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryService.Data.Services.Abstraction
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
-        Task<IReadOnlyCollection<TEntity>> GetAllAsync();
         Task<TEntity> GetAsync(long id);
         Task<TEntity> InsertAsync(TEntity newEntity);
-        Task<TEntity> UpdateAsync(long id, TEntity newEntity);
-        Task<bool> DeleteAsync(long id);
+        Task<TEntity> UpdateAsync(TEntity newEntity);
+        Task DeleteAsync(long id);
     }
 
-    public abstract class BaseService<TContext, TEntity> : IBaseService<TEntity>, IDisposable
-        where TContext : DbContext
+    public abstract class BaseService<TEntity> : IBaseService<TEntity>, IDisposable
         where TEntity : class
     {
-        private TContext DbContext { get; }
+        private LibraryServiceDbContext dbContext;
         private readonly DbSet<TEntity> dbSet;
 
-        protected BaseService(TContext dbContext)
+        protected BaseService(LibraryServiceDbContext dbContext)
         {
-            dbSet = DbContext.Set<TEntity>();
-        }
-
-        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
-        {
-            return await dbSet.AsNoTracking().ToListAsync();
+            dbSet = dbContext.Set<TEntity>();
         }
 
         public async Task<TEntity> GetAsync(long id)
@@ -39,34 +33,25 @@ namespace LibraryService.Data.Services.Abstraction
 
         public async Task<TEntity> InsertAsync(TEntity newEntity)
         {
-            await dbSet.AddAsync(newEntity);
-            Save();
-            return await dbSet.FindAsync(newEntity);
-
+            var addEntity = await dbSet.AddAsync(newEntity);
+            await dbContext.SaveChangesAsync();
+            return addEntity.Entity;
         }
 
-        public async Task<TEntity> UpdateAsync(long id, TEntity newEntity)
+        public async Task<TEntity> UpdateAsync(TEntity newEntity)
         {
-            throw new System.NotImplementedException();
-            //var result = await dbSet.FindAsync(id);
+            var updateEntity = dbSet.Update(newEntity);
+            await dbContext.SaveChangesAsync();
+            return updateEntity.Entity;
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task DeleteAsync(long id)
         {
-            var result = dbSet.Remove(await dbSet.FindAsync(id));
-            
-            if (result != null)
+            var entity = await dbSet.FindAsync(id);
+            if (entity != null)
             {
-                Save();
-                return true;
+                dbSet.Remove(entity);
             }
-
-            return false;
-        }
-
-        public void Save()
-        {
-            DbContext.SaveChanges();
         }
 
         private bool disposed = false;
@@ -77,7 +62,7 @@ namespace LibraryService.Data.Services.Abstraction
             {
                 if (disposing)
                 {
-                    DbContext.Dispose();
+                    dbContext.DisposeAsync();
                 }
                 disposed = true;
             }

@@ -5,14 +5,14 @@ using LibraryService.Domain.Core.Entities;
 
 namespace LibraryService.Data.Services
 {
-    public interface IAuthorService : IBaseService<Author>
+    public interface IBookFundService : IBaseService<Author>
     {
         Task<long> FindAsync(Author author);
     }
-    public class AuthorService : BaseService<Author>, IAuthorService
+    public class BookFundService : BaseService<Author>, IBookFundService
     {
 
-        public AuthorService(LibraryServiceDbContext dbContext) : base(dbContext)
+        public BookFundService(LibraryServiceDbContext dbContext) : base(dbContext)
         { }
 
         public Task<long> FindAsync(Author author)
