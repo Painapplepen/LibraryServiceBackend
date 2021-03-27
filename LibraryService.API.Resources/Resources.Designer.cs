@@ -22,14 +22,14 @@ namespace LibraryService.API.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resource {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace LibraryService.API.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LibraryService.API.Resources.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LibraryService.API.Resources.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,38 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while processing your request..
+        /// </summary>
+        public static string ErrorProcessingRequest {
+            get {
+                return ResourceManager.GetString("ErrorProcessingRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insufficient or invalid data was provided for this request..
+        /// </summary>
+        public static string InvalidDataProvided {
+            get {
+                return ResourceManager.GetString("InvalidDataProvided", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid sort direction. Valid values are &apos;asc&apos; or &apos;desc&apos;..
         /// </summary>
         public static string InvalidSortDirection {
             get {
                 return ResourceManager.GetString("InvalidSortDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested resource was not found..
+        /// </summary>
+        public static string ResourceNotFound {
+            get {
+                return ResourceManager.GetString("ResourceNotFound", resourceCulture);
             }
         }
     }

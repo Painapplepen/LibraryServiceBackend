@@ -13,8 +13,8 @@ namespace LibraryService.Data.Services
 {
     public interface IAdminService : IBaseService<Admin>
     {
-        Task<bool> ExistAsync(AdminDTO admin);
-        Task<IReadOnlyCollection<Admin>> FindAsync(AdminSearchCondition searchCondition);
+        Task<Admin> ExistAsync(AdminDTO admin);
+        Task<IReadOnlyCollection<Admin>> FindAsync(AdminSearchCondition searchCondition, string sortProperty);
         Task<long> CountAsync(AdminSearchCondition searchCondition);
     }
     public class AdminService : BaseService<Admin> , IAdminService
@@ -26,25 +26,20 @@ namespace LibraryService.Data.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<bool> ExistAsync(AdminDTO admin)
+        public async Task<Admin> ExistAsync(AdminDTO admin)
         {
-            if (!await dbContext.Admins.AnyAsync(entity => entity.Login == admin.Login && entity.Password == admin.Password))
-            {
-                return false;
-            }
-
-            return true;
+            return await dbContext.Admins.Where(entity => entity.Login == admin.Login && entity.Password == admin.Password).FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyCollection<Admin>> FindAsync(AdminSearchCondition searchCondition)
+        public async Task<IReadOnlyCollection<Admin>> FindAsync(AdminSearchCondition searchCondition, string sortProperty)
         {
             IQueryable<Admin> query = BuildFindQuery(searchCondition);
 
             query = searchCondition.ListSortDirection == ListSortDirection.Ascending
-                ? query.OrderBy(searchCondition => searchCondition.Login)
-                : query.OrderByDescending(searchCondition => searchCondition.Login);
+                ? query.OrderBy(sortProperty)
+                : query.OrderByDescending(sortProperty);
 
-            return await query.Skip((searchCondition.Page - 1) * searchCondition.PageSize).Take(searchCondition.PageSize).ToListAsync();
+            return await query.Page(searchCondition.Page, searchCondition.PageSize).ToListAsync();
         }
 
         public async Task<long> CountAsync(AdminSearchCondition searchCondition)
@@ -66,11 +61,11 @@ namespace LibraryService.Data.Services
 
             if (searchCondition.Login.Any())
             {
-                foreach (var contactPerson in searchCondition.Login)
+                foreach (var loginPerson in searchCondition.Login)
                 {
-                    var upperContactPerson = contactPerson.ToUpper().Trim();
+                    var upperLoginPerson = loginPerson.ToUpper().Trim();
                     query = query.Where(x =>
-                        x.Login != null && x.Login.ToUpper().Contains(upperContactPerson));
+                        x.Login != null && x.Login.ToUpper().Contains(upperLoginPerson));
                 }
             }
 

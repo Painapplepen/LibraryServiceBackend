@@ -20,7 +20,7 @@ namespace LibraryService.API.Contracts.Extensions
                 return ListSortDirection.Descending;
             }
 
-            throw new ArgumentException(Resources.Resource.InvalidSortDirection, nameof(sortDirection));
+            throw new ArgumentException(Resources.Resources.InvalidSortDirection, nameof(sortDirection));
         }
     }
 }

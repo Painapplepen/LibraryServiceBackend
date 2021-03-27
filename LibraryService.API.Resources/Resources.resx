@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorProcessingRequest" xml:space="preserve">
+    <value>An error occurred while processing your request.</value>
+  </data>
+  <data name="InvalidDataProvided" xml:space="preserve">
+    <value>Insufficient or invalid data was provided for this request.</value>
+  </data>
   <data name="InvalidSortDirection" xml:space="preserve">
     <value>Invalid sort direction. Valid values are 'asc' or 'desc'.</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>The requested resource was not found.</value>
   </data>
 </root>
