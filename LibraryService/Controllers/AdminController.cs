@@ -8,6 +8,7 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Admin;
 using LibraryService.API.Host.Controllers.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -16,6 +17,7 @@ namespace LibraryService.API.Host.Controllers
 {
     [Route("api/admin")]
     [ApiController]
+    [Authorize]
     public class AdminController : MediatingControllerBase
     {
         public AdminController(IMediator mediator) : base(mediator)
@@ -51,14 +53,6 @@ namespace LibraryService.API.Host.Controllers
         public async Task<IActionResult> UpdateAdmin([FromRoute] long id, [FromBody] AdminDTO admin, CancellationToken cancellationToken = default)
         {
             return await ExecuteCommandAsync(new UpdateAdminCommand(id, admin), cancellationToken: cancellationToken);
-        }
-
-        [HttpGet]
-        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AdminDTO))]
-        [SwaggerOperation(Summary = "Get the details of a prospect", OperationId = "GetAdmin")]
-        public async Task<IActionResult> GetAdmin([FromBody] AdminDTO admin, CancellationToken cancellationToken = default)
-        {
-            return await ExecuteQueryAsync(new ExistAdminQuery(admin), cancellationToken: cancellationToken);
         }
     }
 }
