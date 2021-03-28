@@ -14,13 +14,13 @@ using MediatR;
 
 namespace LibraryService.API.Application.Queries.AdminQueries
 {
-    public class SearchAdminQuery : PagedSearchQuery<FoundAdminDTO, AdminSearchCondition>
+    public class SearchAuthorQuery : PagedSearchQuery<FoundAdminDTO, AdminSearchCondition>
     {
-        public SearchAdminQuery(AdminSearchCondition searchCondition) : base(searchCondition)
+        public SearchAuthorQuery(AdminSearchCondition searchCondition) : base(searchCondition)
         { }
     }
 
-    public class SearchAdminQueryHandler : IRequestHandler<SearchAdminQuery, PagedResponse<FoundAdminDTO>>
+    public class SearchAdminQueryHandler : IRequestHandler<SearchAuthorQuery, PagedResponse<FoundAdminDTO>>
     {
         private readonly IAdminService adminService;
 
@@ -29,7 +29,7 @@ namespace LibraryService.API.Application.Queries.AdminQueries
             this.adminService = adminService;
         }
 
-        public async Task<PagedResponse<FoundAdminDTO>> Handle(SearchAdminQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResponse<FoundAdminDTO>> Handle(SearchAuthorQuery request, CancellationToken cancellationToken)
         {
             AdminSearchCondition searchCondition = new AdminSearchCondition()
             {

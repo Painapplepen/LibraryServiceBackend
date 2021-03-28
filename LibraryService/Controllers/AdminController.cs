@@ -44,7 +44,7 @@ namespace LibraryService.API.Host.Controllers
         [SwaggerOperation(Summary = "Delete a admin", OperationId = "DeleteAdmin")]
         public async Task<IActionResult> DeleteAdmin([FromRoute] long id, CancellationToken cancellationToken = default)
         {
-            return await ExecuteCommandAsync(new DeleteAdminCommand(id), cancellationToken: cancellationToken);
+            return await ExecuteCommandAsync(new DeleteAuthorCommand(id), cancellationToken: cancellationToken);
         }
 
         [HttpPut("{id}")]
@@ -52,7 +52,7 @@ namespace LibraryService.API.Host.Controllers
         [SwaggerOperation(Summary = "Update a admin", OperationId = "UpdateAdmin")]
         public async Task<IActionResult> UpdateAdmin([FromRoute] long id, [FromBody] AdminDTO admin, CancellationToken cancellationToken = default)
         {
-            return await ExecuteCommandAsync(new UpdateAdminCommand(id, admin), cancellationToken: cancellationToken);
+            return await ExecuteCommandAsync(new UpdateAuthorCommand(id, admin), cancellationToken: cancellationToken);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace LibraryService.API.Contracts.Incoming.SearchConditions
+﻿namespace LibraryService.API.Contracts.Incoming.Abstractions
 {
     public class PageSettings
     {

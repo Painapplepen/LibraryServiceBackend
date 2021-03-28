@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using LibraryService.API.Contracts.Extensions;
 using Newtonsoft.Json;
-using LibraryService.API.Contracts.Incoming.SearchConditions;
 
 namespace LibraryService.API.Contracts.Incoming.Abstractions
 {
