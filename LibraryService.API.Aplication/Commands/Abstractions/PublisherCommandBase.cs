@@ -5,16 +5,16 @@ namespace LibraryService.API.Application.Commands.Abstractions
 {
     public class PublisherCommandBase<TResponse> : IRequest<TResponse>
     {
-        public PublisherFoundDTO Entity { get; set; }
+        public PublisherDTO Entity { get; set; }
         public long Id { get; set; }
 
-        protected PublisherCommandBase(long id, PublisherFoundDTO entity)
+        protected PublisherCommandBase(long id, PublisherDTO entity)
         {
             Id = id;
             Entity = entity;
         }
 
-        protected PublisherCommandBase(PublisherFoundDTO entity)
+        protected PublisherCommandBase(PublisherDTO entity)
         {
             Entity = entity;
         }

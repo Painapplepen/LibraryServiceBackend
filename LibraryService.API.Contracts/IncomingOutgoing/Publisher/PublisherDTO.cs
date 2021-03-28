@@ -1,6 +1,6 @@
 ﻿namespace LibraryService.API.Contracts.IncomingOutgoing.Publisher
 {
-    public class PublisherFoundDTO
+    public class PublisherDTO
     {
         public string Name { get; set; }
     }

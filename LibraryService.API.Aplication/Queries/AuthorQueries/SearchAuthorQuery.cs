@@ -7,7 +7,6 @@ using LibraryService.API.Application.Abstractions;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Author;
-using LibraryService.API.Contracts.Outgoing.Publisher;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;

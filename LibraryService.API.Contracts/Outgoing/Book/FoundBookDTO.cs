@@ -1,6 +1,6 @@
-﻿using LibraryService.API.Contracts.IncomingOutgoing.Author;
-using LibraryService.API.Contracts.IncomingOutgoing.Genre;
-using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
+﻿using LibraryService.API.Contracts.Outgoing.Author;
+using LibraryService.API.Contracts.Outgoing.Genre;
+using LibraryService.API.Contracts.Outgoing.Publisher;
 
 namespace LibraryService.API.Contracts.Outgoing.Book
 {
@@ -8,9 +8,9 @@ namespace LibraryService.API.Contracts.Outgoing.Book
     {
         public long Id { get; set; }
         public string Title { get; set; }
-        public AuthorDTO Author { get; set; }
-        public PublisherFoundDTO Publisher { get; set; }
-        public GenreDTO Genre { get; set; }
+        public FoundAuthorDTO Author { get; set; }
+        public FoundPublisherDTO Publisher { get; set; }
+        public FoundGenreDTO Genre { get; set; }
         public long AmountPage { get; set; }
         public long Year { get; set; }
     }

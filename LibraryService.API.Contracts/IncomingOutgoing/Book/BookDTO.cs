@@ -8,7 +8,7 @@ namespace LibraryService.API.Contracts.IncomingOutgoing.Book
     {
         public string Title { get; set; }
         public AuthorDTO Author { get; set; }
-        public PublisherFoundDTO Publisher { get; set; }
+        public PublisherDTO Publisher { get; set; }
         public GenreDTO Genre { get; set; }
         public long AmountPage { get; set; }
         public long Year { get; set; }

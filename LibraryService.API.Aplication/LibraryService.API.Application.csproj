@@ -23,11 +23,6 @@
     <Folder Include="Commands\GenreCommands\" />
     <Folder Include="Commands\LibraryCommands\" />
     <Folder Include="Commands\PublisherCommands\" />
-    <Folder Include="Queries\BookFundQueries\" />
-    <Folder Include="Queries\BookQueries\" />
-    <Folder Include="Queries\GenreQueries\" />
-    <Folder Include="Queries\LibraryQueries\" />
-    <Folder Include="Queries\PublisherQueries\" />
   </ItemGroup>
 
 </Project>
