@@ -18,8 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Commands\BookCommands\" />
-    <Folder Include="Commands\BookFundCommands\" />
     <Folder Include="Commands\GenreCommands\" />
     <Folder Include="Commands\LibraryCommands\" />
     <Folder Include="Commands\PublisherCommands\" />

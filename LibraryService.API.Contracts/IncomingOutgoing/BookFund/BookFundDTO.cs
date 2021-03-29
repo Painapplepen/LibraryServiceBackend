@@ -5,7 +5,7 @@ namespace LibraryService.API.Contracts.IncomingOutgoing.BookFund
 {
     public class BookFundDTO
     {
-        public string BookTitle { get; set; }
+        public long Amount { get; set; }
         public BookDTO Book { get; set; }
         public LibraryDTO Library { get; set; }
     }

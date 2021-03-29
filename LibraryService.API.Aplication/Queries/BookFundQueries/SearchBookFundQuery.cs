@@ -74,7 +74,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                     AmountPage = bookFund.Book.AmountPage,
                     Title = bookFund.Book.Title,
                     Year = bookFund.Book.Year,
-                    Author = 
+                    Author =
                     {
                         Id = bookFund.Book.AuthorId,
                         Name = bookFund.Book.Author.Name,
@@ -85,6 +85,11 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                     {
                         Id = bookFund.Book.GenreId,
                         Name = bookFund.Book.Genre.Name
+                    },
+                    Publisher =
+                    {
+                        Id = bookFund.Book.PublisherId,
+                        Name = bookFund.Book.Publisher.Name
                     }
                 },
                 Library =

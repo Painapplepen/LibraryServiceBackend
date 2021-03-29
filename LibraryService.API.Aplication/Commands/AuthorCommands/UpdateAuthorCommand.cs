@@ -1,20 +1,19 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
-using LibraryService.API.Contracts.IncomingOutgoing.Admin;
 using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
 
-namespace LibraryService.API.Application.Commands.AdminCommands
+namespace LibraryService.API.Application.Commands.AuthorCommands
 {
-    public class UpdateAuthorCommand : AuthorCommandBase<AuthorDTO>
+    public class UpdateBookCommand : AuthorCommandBase<AuthorDTO>
     {
-        public UpdateAuthorCommand(long id, AuthorDTO update) : base(id, update) { }
+        public UpdateBookCommand(long id, AuthorDTO update) : base(id, update) { }
     }
 
-    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDTO>
+    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateBookCommand, AuthorDTO>
     {
         private readonly IAuthorService authorService;
 
@@ -23,15 +22,15 @@ namespace LibraryService.API.Application.Commands.AdminCommands
             this.authorService = authorService;
         }
 
-        public async Task<AuthorDTO> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
+        public async Task<AuthorDTO> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
             var author = await authorService.GetAsync(request.Id);
 
             var authorToUpdate = MapDTOToAuthor(request.Entity, author);
 
-            var updatedAdmin = await authorService.UpdateAsync(authorToUpdate);
+            var updatedAuthor = await authorService.UpdateAsync(authorToUpdate);
 
-            return MapToAuthorDTO(updatedAdmin);
+            return MapToAuthorDTO(updatedAuthor);
         }
 
         public Author MapDTOToAuthor(AuthorDTO authorDTO, Author author)

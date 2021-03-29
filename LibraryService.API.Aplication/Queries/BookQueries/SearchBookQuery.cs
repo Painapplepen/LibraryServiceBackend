@@ -77,6 +77,11 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 {
                     Id = book.GenreId,
                     Name = book.Genre.Name
+                },
+                Publisher =
+                {
+                    Id = book.PublisherId,
+                    Name = book.Publisher.Name
                 }
             };
         }
