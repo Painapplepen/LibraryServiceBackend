@@ -28,7 +28,7 @@ namespace LibraryService.API.Application.Commands.BookFundCommands
             var insertedAuthor = await bookFundService.InsertAsync(author);
             return insertedAuthor.Id;
         }
-        // Check it mb the best way use just domain models than DTO
+        // Check book query
         private BookFund MapToBookFund(BookFundDTO bookFund)
         {
             return new BookFund
