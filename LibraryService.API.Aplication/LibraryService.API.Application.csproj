@@ -18,9 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Commands\GenreCommands\" />
     <Folder Include="Commands\LibraryCommands\" />
-    <Folder Include="Commands\PublisherCommands\" />
   </ItemGroup>
 
 </Project>

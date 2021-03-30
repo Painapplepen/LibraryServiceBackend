@@ -1,7 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
+using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.API.Contracts.IncomingOutgoing.Book;
+using LibraryService.API.Contracts.IncomingOutgoing.Genre;
+using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -53,17 +56,17 @@ namespace LibraryService.API.Application.Commands.BookCommands
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                Author =
+                Author = new AuthorDTO()
                 {
                     Name = book.Author.Name,
                     Surname = book.Author.Surname,
                     Patronymic = book.Author.Patronymic
                 },
-                Genre =
+                Genre = new GenreDTO()
                 {
                     Name = book.Genre.Name
                 },
-                Publisher =
+                Publisher = new PublisherDTO()
                 {
                     Name = book.Publisher.Name
                 }

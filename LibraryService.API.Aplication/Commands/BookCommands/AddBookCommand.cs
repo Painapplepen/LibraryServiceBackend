@@ -37,17 +37,17 @@ namespace LibraryService.API.Application.Commands.BookCommands
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                Author =
+                Author = new Author()
                 {
                     Name = book.Author.Name,
                     Surname = book.Author.Surname,
                     Patronymic = book.Author.Patronymic
                 },
-                Genre =
+                Genre = new Genre()
                 {
                     Name = book.Genre.Name
                 },
-                Publisher = 
+                Publisher = new Publisher()
                 {
                     Name = book.Publisher.Name
                 }

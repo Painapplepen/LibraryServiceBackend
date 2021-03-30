@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
 using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.API.Contracts.IncomingOutgoing.BookFund;
+using LibraryService.API.Contracts.IncomingOutgoing.Genre;
+using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -34,7 +36,7 @@ namespace LibraryService.API.Application.Commands.BookFundCommands
             return MapToBookFundDTO(updatedBookFund);
         }
         // Do them private next time
-        public BookFund MapDTOToBookFund(BookFundDTO bookFundDTO, BookFund bookFund)
+        private BookFund MapDTOToBookFund(BookFundDTO bookFundDTO, BookFund bookFund)
         {
             bookFund.Amount = bookFundDTO.Amount;
             bookFund.Book.AmountPage = bookFundDTO.Book.AmountPage;
@@ -52,7 +54,7 @@ namespace LibraryService.API.Application.Commands.BookFundCommands
             return bookFund;
         }
 
-        public BookFundDTO MapToBookFundDTO(BookFund bookFund)
+        private BookFundDTO MapToBookFundDTO(BookFund bookFund)
         {
             return new BookFundDTO()
             {
@@ -62,17 +64,17 @@ namespace LibraryService.API.Application.Commands.BookFundCommands
                     AmountPage = bookFund.Book.AmountPage,
                     Title = bookFund.Book.Title,
                     Year = bookFund.Book.Year,
-                    Author =
+                    Author = new AuthorDTO()
                     {
                         Name = bookFund.Book.Author.Name,
                         Surname = bookFund.Book.Author.Surname,
                         Patronymic = bookFund.Book.Author.Patronymic
                     },
-                    Genre =
+                    Genre = new GenreDTO()
                     {
                         Name = bookFund.Book.Genre.Name
                     },
-                    Publisher =
+                    Publisher = new PublisherDTO()
                     {
                         Name = bookFund.Book.Publisher.Name
                     }
