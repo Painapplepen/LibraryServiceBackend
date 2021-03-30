@@ -47,11 +47,19 @@ namespace LibraryService.API.Host.Controllers
         }
 
         [HttpPut("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AdminDTO))]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(BookDTO))]
         [SwaggerOperation(Summary = "Update a book", OperationId = "UpdateBook")]
         public async Task<IActionResult> UpdateBook([FromRoute] long id, [FromBody] BookDTO book, CancellationToken cancellationToken = default)
         {
             return await ExecuteCommandAsync(new UpdateBookCommand(id, book), cancellationToken: cancellationToken);
+        }
+
+        [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(BookDTO))]
+        [SwaggerOperation(Summary = "Get the details of a book", OperationId = "GetBook")]
+        public async Task<IActionResult> GetBook([FromRoute] long id, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetBookQuery(id), cancellationToken: cancellationToken);
         }
     }
 }

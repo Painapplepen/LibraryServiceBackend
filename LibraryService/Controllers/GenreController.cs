@@ -1,15 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using LibraryService.API.Application.Commands.BookCommands;
 using LibraryService.API.Application.Commands.GenreCommands;
-using LibraryService.API.Application.Queries.BookQueries;
 using LibraryService.API.Application.Queries.GenreQueries;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
-using LibraryService.API.Contracts.IncomingOutgoing.Admin;
-using LibraryService.API.Contracts.IncomingOutgoing.Book;
 using LibraryService.API.Contracts.IncomingOutgoing.Genre;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
-using LibraryService.API.Contracts.Outgoing.Book;
+using LibraryService.API.Contracts.Outgoing.Genre;
 using LibraryService.API.Host.Controllers.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +22,7 @@ namespace LibraryService.API.Host.Controllers
         { }
 
         [HttpPost("search")]
-        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(PagedResponse<FoundBookDTO>))]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(PagedResponse<FoundGenreDTO>))]
         [SwaggerOperation(Summary = "Search genre", OperationId = "SearchGenre")]
         public async Task<IActionResult> SearchGenre([FromBody] GenreSearchCondition searchCondition, CancellationToken cancellationToken = default)
         {
@@ -50,11 +46,19 @@ namespace LibraryService.API.Host.Controllers
         }
 
         [HttpPut("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(AdminDTO))]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(GenreDTO))]
         [SwaggerOperation(Summary = "Update a genre", OperationId = "UpdateGenre")]
-        public async Task<IActionResult> UpdateGenre([FromRoute] long id, [FromBody] GenreDTO book, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateGenre([FromRoute] long id, [FromBody] GenreDTO genre, CancellationToken cancellationToken = default)
         {
-            return await ExecuteCommandAsync(new UpdateGenreCommand(id, book), cancellationToken: cancellationToken);
+            return await ExecuteCommandAsync(new UpdateGenreCommand(id, genre), cancellationToken: cancellationToken);
+        }
+
+        [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(GenreDTO))]
+        [SwaggerOperation(Summary = "Get the details of a genre", OperationId = "GetGenre")]
+        public async Task<IActionResult> GetGenre([FromRoute] long id, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetGenreQuery(id), cancellationToken: cancellationToken);
         }
     }
 }

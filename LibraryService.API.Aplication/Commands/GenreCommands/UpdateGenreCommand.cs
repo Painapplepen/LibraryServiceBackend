@@ -8,12 +8,12 @@ using MediatR;
 
 namespace LibraryService.API.Application.Commands.GenreCommands
 {
-    public class UpdatePublisherCommand : GenreCommandBase<GenreDTO>
+    public class UpdateGenreCommand : GenreCommandBase<GenreDTO>
     {
-        public UpdatePublisherCommand(long id, GenreDTO update) : base(id, update) { }
+        public UpdateGenreCommand(long id, GenreDTO update) : base(id, update) { }
     }
 
-    public class UpdateGenreCommandHandler : IRequestHandler<UpdatePublisherCommand, GenreDTO>
+    public class UpdateGenreCommandHandler : IRequestHandler<UpdateGenreCommand, GenreDTO>
     {
         private readonly IGenreService genreService;
 
@@ -22,7 +22,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
             this.genreService = genreService;
         }
 
-        public async Task<GenreDTO> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
+        public async Task<GenreDTO> Handle(UpdateGenreCommand request, CancellationToken cancellationToken)
         {
             var genre = await genreService.GetAsync(request.Id);
 

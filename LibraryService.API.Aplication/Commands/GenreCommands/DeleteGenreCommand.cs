@@ -5,17 +5,17 @@ using MediatR;
 
 namespace LibraryService.API.Application.Commands.GenreCommands
 {
-    public class DeletePublisherCommand : IRequest
+    public class DeleteGenreCommand : IRequest
     {
         public long Id { get; }
 
-        public DeletePublisherCommand(long id)
+        public DeleteGenreCommand(long id)
         {
             Id = id;
         }
     }
 
-    public class DeleteGenreCommandHandler : IRequestHandler<DeletePublisherCommand>
+    public class DeleteGenreCommandHandler : IRequestHandler<DeleteGenreCommand>
     {
         private readonly IGenreService genreService;
 
@@ -24,7 +24,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
             this.genreService = genreService;
         }
 
-        public async Task<Unit> Handle(DeletePublisherCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteGenreCommand request, CancellationToken cancellationToken)
         {
             await genreService.DeleteAsync(request.Id);
             return Unit.Value;
