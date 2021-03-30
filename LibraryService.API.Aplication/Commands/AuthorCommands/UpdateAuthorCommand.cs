@@ -8,12 +8,12 @@ using MediatR;
 
 namespace LibraryService.API.Application.Commands.AuthorCommands
 {
-    public class UpdateBookCommand : AuthorCommandBase<AuthorDTO>
+    public class UpdateAuthorCommand : AuthorCommandBase<AuthorDTO>
     {
-        public UpdateBookCommand(long id, AuthorDTO update) : base(id, update) { }
+        public UpdateAuthorCommand(long id, AuthorDTO update) : base(id, update) { }
     }
 
-    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateBookCommand, AuthorDTO>
+    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDTO>
     {
         private readonly IAuthorService authorService;
 
@@ -22,7 +22,7 @@ namespace LibraryService.API.Application.Commands.AuthorCommands
             this.authorService = authorService;
         }
 
-        public async Task<AuthorDTO> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+        public async Task<AuthorDTO> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
             var author = await authorService.GetAsync(request.Id);
 

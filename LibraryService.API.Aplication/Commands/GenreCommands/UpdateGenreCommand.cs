@@ -8,12 +8,12 @@ using MediatR;
 
 namespace LibraryService.API.Application.Commands.GenreCommands
 {
-    public class UpdateGenreCommand : GenreCommandBase<GenreDTO>
+    public class UpdatePublisherCommand : GenreCommandBase<GenreDTO>
     {
-        public UpdateGenreCommand(long id, GenreDTO update) : base(id, update) { }
+        public UpdatePublisherCommand(long id, GenreDTO update) : base(id, update) { }
     }
 
-    public class UpdateGenreCommandHandler : IRequestHandler<UpdateGenreCommand, GenreDTO>
+    public class UpdateGenreCommandHandler : IRequestHandler<UpdatePublisherCommand, GenreDTO>
     {
         private readonly IGenreService genreService;
 
@@ -22,7 +22,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
             this.genreService = genreService;
         }
 
-        public async Task<GenreDTO> Handle(UpdateGenreCommand request, CancellationToken cancellationToken)
+        public async Task<GenreDTO> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
         {
             var genre = await genreService.GetAsync(request.Id);
 
@@ -30,7 +30,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
 
             var updatedGenre = await genreService.UpdateAsync(genreToUpdate);
 
-            return MapDTOToGenreDTO(updatedGenre);
+            return MapToGenreDTO(updatedGenre);
         }
 
         public Genre MapDTOToGenre(GenreDTO genreDTO, Genre genre)
@@ -39,7 +39,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
             return genre;
         }
 
-        public GenreDTO MapDTOToGenreDTO(Genre genre)
+        public GenreDTO MapToGenreDTO(Genre genre)
         {
             return new GenreDTO()
             {

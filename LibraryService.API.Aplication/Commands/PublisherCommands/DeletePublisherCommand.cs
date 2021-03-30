@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using LibraryService.Data.Services;
 using MediatR;
 
-namespace LibraryService.API.Application.Commands.GenreCommands
+namespace LibraryService.API.Application.Commands.PublisherCommands
 {
     public class DeletePublisherCommand : IRequest
     {
@@ -15,18 +15,18 @@ namespace LibraryService.API.Application.Commands.GenreCommands
         }
     }
 
-    public class DeleteGenreCommandHandler : IRequestHandler<DeletePublisherCommand>
+    public class DeletePublisherCommandHandler : IRequestHandler<DeletePublisherCommand>
     {
-        private readonly IGenreService genreService;
+        private readonly IPublisherService publisherService;
 
-        public DeleteGenreCommandHandler(IGenreService genreService)
+        public DeletePublisherCommandHandler(IPublisherService publisherService)
         {
-            this.genreService = genreService;
+            this.publisherService = publisherService;
         }
 
         public async Task<Unit> Handle(DeletePublisherCommand request, CancellationToken cancellationToken)
         {
-            await genreService.DeleteAsync(request.Id);
+            await publisherService.DeleteAsync(request.Id);
             return Unit.Value;
         }
     }

@@ -15,7 +15,7 @@ namespace LibraryService.Data.Services.Abstraction
         Task DeleteAsync(long id);
     }
 
-    public abstract class BaseService<TEntity> : IBaseService<TEntity>, IDisposable
+    public abstract class BaseService<TEntity> : IBaseService<TEntity>
         where TEntity : class
     {
         private LibraryServiceDbContext dbContext;
@@ -23,6 +23,7 @@ namespace LibraryService.Data.Services.Abstraction
 
         protected BaseService(LibraryServiceDbContext dbContext)
         {
+            this.dbContext = dbContext;
             dbSet = dbContext.Set<TEntity>();
         }
 
@@ -33,45 +34,30 @@ namespace LibraryService.Data.Services.Abstraction
 
         public async Task<TEntity> InsertAsync(TEntity newEntity)
         {
-            var addEntity = await dbSet.AddAsync(newEntity);
+            await dbSet.AddAsync(newEntity);
             await dbContext.SaveChangesAsync();
-            return addEntity.Entity;
+            return newEntity;
         }
 
         public async Task<TEntity> UpdateAsync(TEntity newEntity)
         {
-            var updateEntity = dbSet.Update(newEntity);
+            if (dbContext.Entry(newEntity).State == EntityState.Detached)
+            {
+                dbSet.Attach(newEntity);
+            }
+
+            dbContext.ChangeTracker.DetectChanges();
             await dbContext.SaveChangesAsync();
-            return updateEntity.Entity;
+            return newEntity;
         }
 
         public async Task DeleteAsync(long id)
         {
-            var entity = await dbSet.FindAsync(id);
+            var entity = await GetAsync(id);
             if (entity != null)
             {
                 dbSet.Remove(entity);
             }
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    dbContext.DisposeAsync();
-                }
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

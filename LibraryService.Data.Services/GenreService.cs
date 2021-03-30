@@ -21,7 +21,6 @@ namespace LibraryService.Data.Services
 
         public GenreService(LibraryServiceDbContext dbContext) : base(dbContext)
         {
-            this.dbContext = dbContext;
         }
 
         public async Task<IReadOnlyCollection<Genre>> FindAsync(GenreSearchCondition searchCondition, string sortProperty)

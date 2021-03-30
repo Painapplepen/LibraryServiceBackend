@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using LibraryService.Data.Services;
 using MediatR;
 
-namespace LibraryService.API.Application.Commands.AdminCommands
+namespace LibraryService.API.Application.Commands.AuthorCommands
 {
     public class DeleteAuthorCommand : IRequest
     {
