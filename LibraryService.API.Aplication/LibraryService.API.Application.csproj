@@ -5,9 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Validation\" />
+    <PackageReference Include="FluentValidation" Version="9.5.3" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibraryService.API.Contracts\LibraryService.API.Contracts.csproj" />
+    <ProjectReference Include="..\LibraryService.Data.Domain\LibraryService.Data.Domain.csproj" />
+    <ProjectReference Include="..\LibraryService.Data.Services\LibraryService.Data.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\" />
+    <Folder Include="Commands\BookCommands\" />
+    <Folder Include="Commands\BookFundCommands\" />
+    <Folder Include="Commands\GenreCommands\" />
+    <Folder Include="Commands\LibraryCommands\" />
+    <Folder Include="Commands\PublisherCommands\" />
   </ItemGroup>
 
 </Project>
