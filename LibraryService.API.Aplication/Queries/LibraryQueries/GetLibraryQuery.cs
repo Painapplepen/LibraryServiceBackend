@@ -29,13 +29,19 @@ namespace LibraryService.API.Application.Queries.LibraryQueries
         public async Task<LibraryDTO> Handle(GetLibraryQuery request, CancellationToken cancellationToken)
         {
             var library = await libraryService.GetAsync(request.Id);
+
+            if (library == null)
+            {
+                return null;
+            }
+
             return MapToLibraryDTO(library);
         }
 
         public LibraryDTO MapToLibraryDTO(Library library)
         {
 
-            new LibraryDTO()
+            return new LibraryDTO()
             {
                 Address = library.Address,
                 Name = library.Name,

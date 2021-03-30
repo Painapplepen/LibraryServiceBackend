@@ -32,6 +32,12 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
         public async Task<BookFundDTO> Handle(GetBookFundQuery request, CancellationToken cancellationToken)
         {
             var bookFund = await bookFundService.GetAsync(request.Id);
+
+            if (bookFund == null)
+            {
+                return null;
+            }
+
             return MapToBookFundDTO(bookFund);
         }
 

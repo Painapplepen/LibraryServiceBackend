@@ -31,6 +31,12 @@ namespace LibraryService.API.Application.Queries.GenreQueries
         public async Task<GenreDTO> Handle(GetGenreQuery request, CancellationToken cancellationToken)
         {
             var genre = await genreService.GetAsync(request.Id);
+
+            if (genre == null)
+            {
+                return null;
+            }
+
             return MapToGenreDTO(genre);
         }
 

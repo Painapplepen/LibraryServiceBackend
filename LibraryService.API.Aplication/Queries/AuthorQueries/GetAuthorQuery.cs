@@ -30,6 +30,11 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
         {
             var author = await authorService.GetAsync(request.Id);
 
+            if (author == null)
+            {
+                return null;
+            }
+
             return MapToAuthorDTO(author);
         }
 

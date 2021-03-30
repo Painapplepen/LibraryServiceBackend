@@ -32,6 +32,12 @@ namespace LibraryService.API.Application.Queries.BookQueries
         public async Task<BookDTO> Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
             var book = await bookService.GetAsync(request.Id);
+
+            if (book == null)
+            {
+                return null;
+            }
+
             return MapToBookDTO(book);
         }
 
