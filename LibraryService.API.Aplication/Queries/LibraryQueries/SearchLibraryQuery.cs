@@ -46,7 +46,7 @@ namespace LibraryService.API.Application.Queries.LibraryQueries
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
             IReadOnlyCollection<Library> foundLibrary = await libraryService.FindAsync(searchCondition, sortProperty);
-            FoundLibraryDTO[] mappedLibrary = foundLibrary.Select(MapToFoundLibrary).ToArray();
+            FoundLibraryDTO[] mappedLibrary = foundLibrary.Select(MapToFoundLibraryDTO).ToArray();
             var totalCount = await libraryService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundLibraryDTO>
@@ -56,7 +56,7 @@ namespace LibraryService.API.Application.Queries.LibraryQueries
             };
         }
 
-        public FoundLibraryDTO MapToFoundLibrary(Library library)
+        private FoundLibraryDTO MapToFoundLibraryDTO(Library library)
         {
             return new FoundLibraryDTO
             {

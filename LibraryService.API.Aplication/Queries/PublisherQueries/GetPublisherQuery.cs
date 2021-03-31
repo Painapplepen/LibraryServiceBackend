@@ -38,7 +38,7 @@ namespace LibraryService.API.Application.Queries.PublisherQueries
             return MapToPublisherDTO(publisher);
         }
 
-        public PublisherDTO MapToPublisherDTO(Publisher publisher)
+        private PublisherDTO MapToPublisherDTO(Publisher publisher)
         {
             return new PublisherDTO()
             {

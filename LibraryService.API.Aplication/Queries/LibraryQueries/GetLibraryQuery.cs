@@ -38,7 +38,7 @@ namespace LibraryService.API.Application.Queries.LibraryQueries
             return MapToLibraryDTO(library);
         }
 
-        public LibraryDTO MapToLibraryDTO(Library library)
+        private LibraryDTO MapToLibraryDTO(Library library)
         {
 
             return new LibraryDTO()

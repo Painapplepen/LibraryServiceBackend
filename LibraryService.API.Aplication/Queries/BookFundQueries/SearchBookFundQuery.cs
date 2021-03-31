@@ -76,7 +76,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             };
         }
 
-        public FoundBookFundDTO MapToFoundBookFund(BookFund bookFund)
+        private FoundBookFundDTO MapToFoundBookFund(BookFund bookFund)
         {
             //var library = libraryService.Get(bookFund.LibraryId);
             //var book = bookService.Get(bookFund.BookId) ;

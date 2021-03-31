@@ -41,7 +41,7 @@ namespace LibraryService.API.Application.Queries.GenreQueries
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
             IReadOnlyCollection<Genre> foundGenre = await genreService.FindAsync(searchCondition, sortProperty);
-            FoundGenreDTO[] mappedGenre = foundGenre.Select(MapToFoundGenre).ToArray();
+            FoundGenreDTO[] mappedGenre = foundGenre.Select(MapToFoundGenreDTO).ToArray();
             var totalCount = await genreService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundGenreDTO>
@@ -51,7 +51,7 @@ namespace LibraryService.API.Application.Queries.GenreQueries
             };
         }
 
-        public FoundGenreDTO MapToFoundGenre(Genre genre)
+        private FoundGenreDTO MapToFoundGenreDTO(Genre genre)
         {
             return new FoundGenreDTO
             {

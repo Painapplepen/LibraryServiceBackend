@@ -43,7 +43,7 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
             IReadOnlyCollection<Author> foundAuthor = await authorService.FindAsync(searchCondition, sortProperty);
-            FoundAuthorDTO[] mappedAuthor = foundAuthor.Select(MapToFoundAuthor).ToArray();
+            FoundAuthorDTO[] mappedAuthor = foundAuthor.Select(MapToFoundAuthorDTO).ToArray();
             var totalCount = await authorService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundAuthorDTO>
@@ -53,7 +53,7 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
             };
         }
 
-        public FoundAuthorDTO MapToFoundAuthor(Author author)
+        private FoundAuthorDTO MapToFoundAuthorDTO(Author author)
         {
             return new FoundAuthorDTO
             {

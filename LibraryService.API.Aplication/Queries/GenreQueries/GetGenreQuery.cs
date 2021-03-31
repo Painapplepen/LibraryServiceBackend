@@ -40,7 +40,7 @@ namespace LibraryService.API.Application.Queries.GenreQueries
             return MapToGenreDTO(genre);
         }
 
-        public GenreDTO MapToGenreDTO(Genre genre)
+        private GenreDTO MapToGenreDTO(Genre genre)
         {
             return new GenreDTO()
             {

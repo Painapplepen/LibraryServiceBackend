@@ -38,7 +38,7 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
             return MapToAuthorDTO(author);
         }
 
-        public AuthorDTO MapToAuthorDTO(Author author)
+        private AuthorDTO MapToAuthorDTO(Author author)
         {
             return new AuthorDTO()
             {

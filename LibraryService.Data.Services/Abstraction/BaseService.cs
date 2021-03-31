@@ -11,11 +11,10 @@ namespace LibraryService.Data.Services.Abstraction
     public interface IBaseService<TEntity> where TEntity : class
     {
         Task<TEntity> GetAsync(long id, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<TEntity> InsertAsync(TEntity newEntity);
         Task<TEntity> UpdateAsync(TEntity newEntity);
         Task DeleteAsync(long id, CancellationToken cancellationToken);
-
-        TEntity Get(long id);
     }
 
     public abstract class BaseService<TEntity> : IBaseService<TEntity>
@@ -35,9 +34,9 @@ namespace LibraryService.Data.Services.Abstraction
             return await dbSet.FindAsync(id, cancellationToken);
         }
 
-        public TEntity Get(long id)
+        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return dbSet.Find(id);
+            return await dbSet.ToListAsync(cancellationToken);
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity)
