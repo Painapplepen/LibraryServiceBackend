@@ -26,7 +26,7 @@ namespace LibraryService.API.Application.Commands.BookCommands
 
         public async Task<Unit> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
-            await bookService.DeleteAsync(request.Id);
+            await bookService.DeleteAsync(request.Id, cancellationToken);
             return Unit.Value;
         }
     }

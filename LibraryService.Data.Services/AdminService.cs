@@ -35,7 +35,14 @@ namespace LibraryService.Data.Services
         public async Task<string> ExistAsync(AdminDTO adminDTO)
         {
             if (!await dbContext.Admins.AnyAsync(entity =>
-                entity.Login == adminDTO.Login && entity.Password == adminDTO.Password))
+                entity.Login == adminDTO.Login))
+            {
+                return null;
+            }
+
+            var admin = await dbContext.Admins.Where(entity => entity.Login == adminDTO.Login).FirstOrDefaultAsync();
+
+            if (admin.Password == adminDTO.Password)
             {
                 return null;
             }

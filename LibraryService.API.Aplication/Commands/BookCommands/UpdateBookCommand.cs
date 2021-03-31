@@ -28,7 +28,7 @@ namespace LibraryService.API.Application.Commands.BookCommands
 
         public async Task<Response> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
-            var book = await bookService.GetAsync(request.Id);
+            var book = await bookService.GetAsync(request.Id.Value, cancellationToken);
 
             if (book == null)
             {

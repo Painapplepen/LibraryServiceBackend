@@ -28,7 +28,7 @@ namespace LibraryService.API.Application.Queries.LibraryQueries
 
         public async Task<LibraryDTO> Handle(GetLibraryQuery request, CancellationToken cancellationToken)
         {
-            var library = await libraryService.GetAsync(request.Id);
+            var library = await libraryService.GetAsync(request.Id, cancellationToken);
 
             if (library == null)
             {

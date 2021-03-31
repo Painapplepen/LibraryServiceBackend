@@ -26,7 +26,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
 
         public async Task<Unit> Handle(DeleteGenreCommand request, CancellationToken cancellationToken)
         {
-            await genreService.DeleteAsync(request.Id);
+            await genreService.DeleteAsync(request.Id, cancellationToken);
             return Unit.Value;
         }
     }

@@ -14,6 +14,7 @@ namespace LibraryService.Data.Services
     {
         Task<IReadOnlyCollection<BookFund>> FindAsync(BookFundSearchCondition searchCondition, string sortProperty);
         Task<long> CountAsync(BookFundSearchCondition searchCondition);
+        Task<bool> ExistsAsync(long id);
     }
     public class BookFundService : BaseService<BookFund>, IBookFundService
     {
@@ -34,6 +35,12 @@ namespace LibraryService.Data.Services
 
             return await query.Page(searchCondition.Page, searchCondition.PageSize).ToListAsync();
         }
+
+        public Task<bool> ExistsAsync(long id)
+        {
+            return dbContext.BookFunds.AnyAsync(entity => entity.Id == id);
+        }
+
 
         public async Task<long> CountAsync(BookFundSearchCondition searchCondition)
         {

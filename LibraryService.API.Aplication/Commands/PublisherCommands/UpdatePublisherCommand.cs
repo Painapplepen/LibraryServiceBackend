@@ -25,7 +25,7 @@ namespace LibraryService.API.Application.Commands.PublisherCommands
 
         public async Task<Response> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
         {
-            var publisher = await publisherService.GetAsync(request.Id);
+            var publisher = await publisherService.GetAsync(request.Id.Value, cancellationToken);
 
             if (publisher == null)
             {

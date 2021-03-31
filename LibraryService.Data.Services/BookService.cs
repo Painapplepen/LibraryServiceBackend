@@ -14,6 +14,7 @@ namespace LibraryService.Data.Services
     {
         Task<IReadOnlyCollection<Book>> FindAsync(BookSearchCondition searchCondition, string sortProperty);
         Task<long> CountAsync(BookSearchCondition searchCondition);
+        Task<bool> ExistsAsync(long id);
     }
     public class BookService : BaseService<Book>, IBookService
     {
@@ -22,6 +23,11 @@ namespace LibraryService.Data.Services
         public BookService(LibraryServiceDbContext dbContext) : base(dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public Task<bool> ExistsAsync(long id)
+        {
+            return dbContext.Books.AnyAsync(entity => entity.Id == id);
         }
 
         public async Task<IReadOnlyCollection<Book>> FindAsync(BookSearchCondition searchCondition, string sortProperty)

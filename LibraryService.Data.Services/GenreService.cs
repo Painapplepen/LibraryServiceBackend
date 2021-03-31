@@ -14,6 +14,7 @@ namespace LibraryService.Data.Services
     {
         Task<IReadOnlyCollection<Genre>> FindAsync(GenreSearchCondition searchCondition, string sortProperty);
         Task<long> CountAsync(GenreSearchCondition searchCondition);
+        Task<bool> ExistsAsync(long id);
     }
     public class GenreService : BaseService<Genre>, IGenreService
     {
@@ -21,6 +22,11 @@ namespace LibraryService.Data.Services
 
         public GenreService(LibraryServiceDbContext dbContext) : base(dbContext)
         {
+        }
+
+        public Task<bool> ExistsAsync(long id)
+        {
+            return dbContext.Genres.AnyAsync(entity => entity.Id == id);
         }
 
         public async Task<IReadOnlyCollection<Genre>> FindAsync(GenreSearchCondition searchCondition, string sortProperty)

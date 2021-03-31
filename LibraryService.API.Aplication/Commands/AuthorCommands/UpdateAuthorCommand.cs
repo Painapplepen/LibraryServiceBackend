@@ -25,7 +25,7 @@ namespace LibraryService.API.Application.Commands.AuthorCommands
 
         public async Task<Response> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
-            var author = await authorService.GetAsync(request.Id);
+            var author = await authorService.GetAsync(request.Id.Value, cancellationToken);
 
             if (author == null)
             {

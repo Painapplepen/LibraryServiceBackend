@@ -27,7 +27,7 @@ namespace LibraryService.API.Application.Queries.BookQueries
 
         public async Task<BookDTO> Handle(GetBookQuery request, CancellationToken cancellationToken)
         {
-            var book = await bookService.GetAsync(request.Id);
+            var book = await bookService.GetAsync(request.Id, cancellationToken);
 
             if (book == null)
             {

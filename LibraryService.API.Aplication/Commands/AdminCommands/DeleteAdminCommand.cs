@@ -26,7 +26,7 @@ namespace LibraryService.API.Application.Commands.AdminCommands
 
         public async Task<Unit> Handle(DeleteAdminCommand request, CancellationToken cancellationToken)
         {
-            await adminService.DeleteAsync(request.Id);
+            await adminService.DeleteAsync(request.Id, cancellationToken);
             return Unit.Value;
         }
     }

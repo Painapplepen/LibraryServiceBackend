@@ -28,7 +28,7 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
 
         public async Task<AuthorDTO> Handle(GetAuthorQuery request, CancellationToken cancellationToken)
         {
-            var author = await authorService.GetAsync(request.Id);
+            var author = await authorService.GetAsync(request.Id, cancellationToken);
 
             if (author == null)
             {

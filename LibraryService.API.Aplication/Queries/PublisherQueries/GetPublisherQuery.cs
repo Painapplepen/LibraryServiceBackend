@@ -28,7 +28,7 @@ namespace LibraryService.API.Application.Queries.PublisherQueries
 
         public async Task<PublisherDTO> Handle(GetPublisherQuery request, CancellationToken cancellationToken)
         {
-            var publisher = await publisherService.GetAsync(request.Id);
+            var publisher = await publisherService.GetAsync(request.Id, cancellationToken);
 
             if (publisher == null)
             {

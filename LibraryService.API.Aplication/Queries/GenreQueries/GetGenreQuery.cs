@@ -30,7 +30,7 @@ namespace LibraryService.API.Application.Queries.GenreQueries
 
         public async Task<GenreDTO> Handle(GetGenreQuery request, CancellationToken cancellationToken)
         {
-            var genre = await genreService.GetAsync(request.Id);
+            var genre = await genreService.GetAsync(request.Id, cancellationToken);
 
             if (genre == null)
             {

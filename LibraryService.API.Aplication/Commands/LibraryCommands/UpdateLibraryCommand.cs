@@ -25,7 +25,7 @@ namespace LibraryService.API.Application.Commands.LibraryCommands
 
         public async Task<Response> Handle(UpdateLibraryCommand request, CancellationToken cancellationToken)
         {
-            var library = await libraryService.GetAsync(request.Id);
+            var library = await libraryService.GetAsync(request.Id.Value, cancellationToken);
 
             if (library == null)
             {

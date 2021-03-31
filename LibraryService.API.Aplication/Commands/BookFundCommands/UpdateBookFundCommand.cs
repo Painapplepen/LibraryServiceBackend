@@ -28,7 +28,7 @@ namespace LibraryService.API.Application.Commands.BookFundCommands
 
         public async Task<Response> Handle(UpdateBookFundCommand request, CancellationToken cancellationToken)
         {
-            var bookFund = await bookFundService.GetAsync(request.Id);
+            var bookFund = await bookFundService.GetAsync(request.Id.Value, cancellationToken);
 
             if (bookFund == null)
             {

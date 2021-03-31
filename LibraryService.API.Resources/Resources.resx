@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AuthorNameRequired" xml:space="preserve">
+    <value>An author name required</value>
+  </data>
+  <data name="AuthorNotFound" xml:space="preserve">
+    <value>The author with id '{0}' was not found.</value>
+  </data>
+  <data name="AuthorPatronymicRequired" xml:space="preserve">
+    <value>An author patronymic required</value>
+  </data>
+  <data name="AuthorSurnameRequired" xml:space="preserve">
+    <value>An author surname required</value>
+  </data>
   <data name="ErrorProcessingRequest" xml:space="preserve">
     <value>An error occurred while processing your request.</value>
   </data>

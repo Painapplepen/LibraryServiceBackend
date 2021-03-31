@@ -61,6 +61,42 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An author name required.
+        /// </summary>
+        public static string AuthorNameRequired {
+            get {
+                return ResourceManager.GetString("AuthorNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The author with id &apos;{0}&apos; was not found..
+        /// </summary>
+        public static string AuthorNotFound {
+            get {
+                return ResourceManager.GetString("AuthorNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An author patronymic required.
+        /// </summary>
+        public static string AuthorPatronymicRequired {
+            get {
+                return ResourceManager.GetString("AuthorPatronymicRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An author surname required.
+        /// </summary>
+        public static string AuthorSurnameRequired {
+            get {
+                return ResourceManager.GetString("AuthorSurnameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while processing your request..
         /// </summary>
         public static string ErrorProcessingRequest {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.Data.EF.SQL;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +10,10 @@ namespace LibraryService.Data.Services.Abstraction
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
-        Task<TEntity> GetAsync(long id);
+        Task<TEntity> GetAsync(long id, CancellationToken cancellationToken);
         Task<TEntity> InsertAsync(TEntity newEntity);
         Task<TEntity> UpdateAsync(TEntity newEntity);
-        Task DeleteAsync(long id);
+        Task DeleteAsync(long id, CancellationToken cancellationToken);
 
         TEntity Get(long id);
     }
@@ -29,9 +30,9 @@ namespace LibraryService.Data.Services.Abstraction
             dbSet = dbContext.Set<TEntity>();
         }
 
-        public async Task<TEntity> GetAsync(long id)
+        public async Task<TEntity> GetAsync(long id, CancellationToken cancellationToken)
         {
-            return await dbSet.FindAsync(id);
+            return await dbSet.FindAsync(id, cancellationToken);
         }
 
         public TEntity Get(long id)
@@ -58,9 +59,9 @@ namespace LibraryService.Data.Services.Abstraction
             return newEntity;
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(long id, CancellationToken cancellationToken)
         {
-            var entity = await GetAsync(id);
+            var entity = await GetAsync(id, cancellationToken);
             if (entity != null)
             {
                 dbSet.Remove(entity);

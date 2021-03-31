@@ -12,9 +12,11 @@ namespace LibraryService.Data.Services
 {
     public interface ILibraryService : IBaseService<Library>
     {
-    Task<IReadOnlyCollection<Library>> FindAsync(LibrarySearchCondition searchCondition, string sortProperty);
-    Task<long> CountAsync(LibrarySearchCondition searchCondition);
+        Task<IReadOnlyCollection<Library>> FindAsync(LibrarySearchCondition searchCondition, string sortProperty);
+        Task<long> CountAsync(LibrarySearchCondition searchCondition);
+        Task<bool> ExistsAsync(long id);
     }
+
     public class LibraryService : BaseService<Library>, ILibraryService
     {
         private readonly LibraryServiceDbContext dbContext;
@@ -22,6 +24,11 @@ namespace LibraryService.Data.Services
         public LibraryService(LibraryServiceDbContext dbContext) : base(dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public Task<bool> ExistsAsync(long id)
+        {
+            return dbContext.Libraries.AnyAsync(entity => entity.Id == id);
         }
 
         public async Task<IReadOnlyCollection<Library>> FindAsync(LibrarySearchCondition searchCondition, string sortProperty)

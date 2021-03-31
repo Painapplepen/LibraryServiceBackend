@@ -25,7 +25,7 @@ namespace LibraryService.API.Application.Commands.GenreCommands
 
         public async Task<Response> Handle(UpdateGenreCommand request, CancellationToken cancellationToken)
         {
-            var genre = await genreService.GetAsync(request.Id);
+            var genre = await genreService.GetAsync(request.Id.Value, cancellationToken);
 
             if (genre == null)
             {
