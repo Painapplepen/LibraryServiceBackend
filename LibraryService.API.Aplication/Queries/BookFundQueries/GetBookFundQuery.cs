@@ -1,9 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.API.Contracts.IncomingOutgoing.BookFund;
-using LibraryService.API.Contracts.IncomingOutgoing.Genre;
-using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -46,32 +43,8 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             return new BookFundDTO()
             {
                 Amount = bookFund.Amount,
-                Book =
-                {
-                    AmountPage = bookFund.Book.AmountPage,
-                    Title = bookFund.Book.Title,
-                    Year = bookFund.Book.Year,
-                    Author = new AuthorDTO()
-                    {
-                        Name = bookFund.Book.Author.Name,
-                        Surname = bookFund.Book.Author.Surname,
-                        Patronymic = bookFund.Book.Author.Patronymic
-                    },
-                    Genre = new GenreDTO()
-                    {
-                        Name = bookFund.Book.Genre.Name
-                    },
-                    Publisher = new PublisherDTO()
-                    {
-                        Name = bookFund.Book.Publisher.Name
-                    }
-                },
-                Library =
-                {
-                    Address = bookFund.Library.Address,
-                    Name = bookFund.Library.Name,
-                    Telephone = bookFund.Library.Telephone
-                }
+                BookId = bookFund.BookId,
+                LibraryId = bookFund.LibraryId
             };
         }
     }

@@ -129,4 +129,7 @@
   <data name="ResourceNotFound" xml:space="preserve">
     <value>The requested resource was not found.</value>
   </data>
+  <data name="ValueRequired" xml:space="preserve">
+    <value>A '{0}' is required.</value>
+  </data>
 </root>

@@ -13,6 +13,8 @@ namespace LibraryService.Data.Services.Abstraction
         Task<TEntity> InsertAsync(TEntity newEntity);
         Task<TEntity> UpdateAsync(TEntity newEntity);
         Task DeleteAsync(long id);
+
+        TEntity Get(long id);
     }
 
     public abstract class BaseService<TEntity> : IBaseService<TEntity>
@@ -30,6 +32,11 @@ namespace LibraryService.Data.Services.Abstraction
         public async Task<TEntity> GetAsync(long id)
         {
             return await dbSet.FindAsync(id);
+        }
+
+        public TEntity Get(long id)
+        {
+            return dbSet.Find(id);
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity)

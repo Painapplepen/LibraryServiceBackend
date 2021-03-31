@@ -2,18 +2,19 @@
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
 using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
+using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.PublisherCommands
 {
-    public class UpdatePublisherCommand : PublisherCommandBase<PublisherDTO>
+    public class UpdatePublisherCommand : PublisherCommandBase<Response>
     {
         public UpdatePublisherCommand(long id, PublisherDTO update) : base(id, update) { }
     }
 
-    public class UpdatePublisherCommandHandler : IRequestHandler<UpdatePublisherCommand, PublisherDTO>
+    public class UpdatePublisherCommandHandler : IRequestHandler<UpdatePublisherCommand, Response>
     {
         private readonly IPublisherService publisherService;
 
@@ -22,29 +23,31 @@ namespace LibraryService.API.Application.Commands.PublisherCommands
             this.publisherService = publisherService;
         }
 
-        public async Task<PublisherDTO> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
         {
             var publisher = await publisherService.GetAsync(request.Id);
+
+            if (publisher == null)
+            {
+                return Response.Error;
+            }
 
             var publisherToUpdate = MapDTOToPublisher(request.Entity, publisher);
 
             var updatedPublisher = await publisherService.UpdateAsync(publisherToUpdate);
 
-            return MapToPublisherDTO(updatedPublisher);
+            if (updatedPublisher == null)
+            {
+                return Response.Error;
+            }
+
+            return Response.Successful;
         }
 
         public Publisher MapDTOToPublisher(PublisherDTO publisherDTO, Publisher publisher)
         {
             publisher.Name = publisherDTO.Name;
             return publisher;
-        }
-
-        public PublisherDTO MapToPublisherDTO(Publisher publisher)
-        {
-            return new PublisherDTO()
-            {
-                Name = publisher.Name
-            };
         }
     }
 }

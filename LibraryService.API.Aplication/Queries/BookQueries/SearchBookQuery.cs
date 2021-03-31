@@ -22,10 +22,18 @@ namespace LibraryService.API.Application.Queries.BookQueries
     public class SearchBookQueryHandler : IRequestHandler<SearchBookQuery, PagedResponse<FoundBookDTO>>
     {
         private readonly IBookService bookService;
-
-        public SearchBookQueryHandler(IBookService bookService)
+        private readonly IPublisherService publisherService;
+        private readonly IAuthorService authorService;
+        private readonly IGenreService genreService;
+        public SearchBookQueryHandler(IBookService bookService, 
+                                    IPublisherService publisherService,
+                                    IAuthorService authorService,
+                                    IGenreService genreService)
         {
             this.bookService = bookService;
+            this.genreService = genreService;
+            this.publisherService = publisherService;
+            this.authorService = authorService;
         }
 
         public async Task<PagedResponse<FoundBookDTO>> Handle(SearchBookQuery request, CancellationToken cancellationToken)
@@ -57,32 +65,35 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 TotalCount = totalCount
             };
         }
-        // Check it.
+
         public FoundBookDTO MapToFoundBook(Book book)
-        {
+        {   
+            //var author = authorService.Get(book.AuthorId);
+            //var genre = genreService.Get(book.GenreId);
+            //var publisher = publisherService.Get(book.PublisherId);
             return new FoundBookDTO
             {
                 Id = book.Id,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                Author =
-                {
-                    Id = book.AuthorId,
-                    Name = book.Author.Name,
-                    Surname = book.Author.Surname,
-                    Patronymic = book.Author.Patronymic
-                },
-                Genre =
-                {
-                    Id = book.GenreId,
-                    Name = book.Genre.Name
-                },
-                Publisher =
-                {
-                    Id = book.PublisherId,
-                    Name = book.Publisher.Name
-                }
+                //Author =
+                //{
+                //    Id = book.AuthorId,
+                //    Name = author.Name,
+                //    Surname = author.Surname,
+                //    Patronymic = author.Patronymic
+                //},
+                //Genre =
+                //{
+                //    Id = book.GenreId,
+                //    Name = genre.Name
+                //},
+                //Publisher =
+                //{
+                //    Id = book.PublisherId,
+                //    Name = publisher.Name
+                //}
             };
         }
 

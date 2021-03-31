@@ -5,18 +5,19 @@ using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.API.Contracts.IncomingOutgoing.Book;
 using LibraryService.API.Contracts.IncomingOutgoing.Genre;
 using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
+using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.BookCommands
 {
-    public class UpdateBookCommand : BookCommandBase<BookDTO>
+    public class UpdateBookCommand : BookCommandBase<Response>
     {
         public UpdateBookCommand(long id, BookDTO update) : base(id, update) { }
     }
 
-    public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, BookDTO>
+    public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Response>
     {
         private readonly IBookService bookService;
 
@@ -25,15 +26,24 @@ namespace LibraryService.API.Application.Commands.BookCommands
             this.bookService = bookService;
         }
 
-        public async Task<BookDTO> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
             var book = await bookService.GetAsync(request.Id);
 
+            if (book == null)
+            {
+                return Response.Error;
+            }
             var bookToUpdate = MapDTOToBook(request.Entity, book);
 
             var updatedBook = await bookService.UpdateAsync(bookToUpdate);
 
-            return MapToBookDTO(updatedBook);
+            if (updatedBook == null)
+            {
+                return Response.Error;
+            }
+
+            return Response.Successful;
         }
 
         public Book MapDTOToBook(BookDTO bookDTO, Book book)
@@ -41,36 +51,10 @@ namespace LibraryService.API.Application.Commands.BookCommands
             book.AmountPage = bookDTO.AmountPage;
             book.Title = bookDTO.Title;
             book.Year = bookDTO.Year;
-            book.Author.Name = bookDTO.Author.Name;
-            book.Author.Surname = bookDTO.Author.Surname;
-            book.Author.Patronymic = bookDTO.Author.Patronymic;
-            book.Publisher.Name = bookDTO.Publisher.Name;
-            book.Genre.Name = bookDTO.Genre.Name;
+            book.AuthorId = bookDTO.AuthorId;
+            book.PublisherId = bookDTO.PublisherId;
+            book.GenreId = bookDTO.GenreId;
             return book;
-        }
-        //Check it
-        public BookDTO MapToBookDTO(Book book)
-        {
-            return new BookDTO()
-            {
-                AmountPage = book.AmountPage,
-                Title = book.Title,
-                Year = book.Year,
-                Author = new AuthorDTO()
-                {
-                    Name = book.Author.Name,
-                    Surname = book.Author.Surname,
-                    Patronymic = book.Author.Patronymic
-                },
-                Genre = new GenreDTO()
-                {
-                    Name = book.Genre.Name
-                },
-                Publisher = new PublisherDTO()
-                {
-                    Name = book.Publisher.Name
-                }
-            };
         }
     }
 }

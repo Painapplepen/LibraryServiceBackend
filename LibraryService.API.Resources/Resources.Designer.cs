@@ -95,5 +95,14 @@ namespace LibraryService.API.Resources {
                 return ResourceManager.GetString("ResourceNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A &apos;{0}&apos; is required..
+        /// </summary>
+        public static string ValueRequired {
+            get {
+                return ResourceManager.GetString("ValueRequired", resourceCulture);
+            }
+        }
     }
 }

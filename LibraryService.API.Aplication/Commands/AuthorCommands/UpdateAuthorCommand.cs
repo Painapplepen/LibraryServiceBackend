@@ -2,18 +2,19 @@
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
 using LibraryService.API.Contracts.IncomingOutgoing.Author;
+using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.AuthorCommands
 {
-    public class UpdateAuthorCommand : AuthorCommandBase<AuthorDTO>
+    public class UpdateAuthorCommand : AuthorCommandBase<Response>
     {
         public UpdateAuthorCommand(long id, AuthorDTO update) : base(id, update) { }
     }
 
-    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDTO>
+    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, Response>
     {
         private readonly IAuthorService authorService;
 
@@ -22,15 +23,25 @@ namespace LibraryService.API.Application.Commands.AuthorCommands
             this.authorService = authorService;
         }
 
-        public async Task<AuthorDTO> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
             var author = await authorService.GetAsync(request.Id);
+
+            if (author == null)
+            {
+                return Response.Error;
+            }
 
             var authorToUpdate = MapDTOToAuthor(request.Entity, author);
 
             var updatedAuthor = await authorService.UpdateAsync(authorToUpdate);
 
-            return MapToAuthorDTO(updatedAuthor);
+            if (updatedAuthor == null)
+            {
+                return Response.Error;
+            }
+
+            return Response.Successful;
         }
 
         public Author MapDTOToAuthor(AuthorDTO authorDTO, Author author)
@@ -41,14 +52,5 @@ namespace LibraryService.API.Application.Commands.AuthorCommands
             return author;
         }
 
-        public AuthorDTO MapToAuthorDTO(Author author)
-        {
-            return new AuthorDTO()
-            {
-                Surname = author.Surname,
-                Name = author.Name,
-                Patronymic = author.Patronymic
-            };
-        }
     }
 }

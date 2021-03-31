@@ -34,32 +34,8 @@ namespace LibraryService.API.Application.Commands.BookFundCommands
             return new BookFund
             {
                 Amount = bookFund.Amount,
-                Book =
-                {
-                    AmountPage = bookFund.Book.AmountPage,
-                    Title = bookFund.Book.Title,
-                    Year = bookFund.Book.Year,
-                    Author = new Author()
-                    {
-                        Name = bookFund.Book.Author.Name,
-                        Surname = bookFund.Book.Author.Surname,
-                        Patronymic = bookFund.Book.Author.Patronymic
-                    },
-                    Genre = new Genre()
-                    {
-                        Name = bookFund.Book.Genre.Name
-                    },
-                    Publisher = new Publisher()
-                    {
-                        Name = bookFund.Book.Publisher.Name
-                    }
-                },
-                Library = new Library()
-                {
-                    Address = bookFund.Library.Address,
-                    Name = bookFund.Library.Name,
-                    Telephone = bookFund.Library.Telephone
-                }
+                BookId = bookFund.BookId,
+                LibraryId = bookFund.LibraryId
             };
         }
     }
