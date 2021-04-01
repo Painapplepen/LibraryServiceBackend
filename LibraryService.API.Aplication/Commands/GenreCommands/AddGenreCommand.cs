@@ -8,6 +8,7 @@ using LibraryService.API.Application.Commands.Abstractions;
 using LibraryService.API.Application.Commands.AuthorCommands;
 using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.API.Contracts.IncomingOutgoing.Genre;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;

@@ -6,6 +6,7 @@ using LibraryService.API.Contracts.IncomingOutgoing.BookFund;
 using LibraryService.API.Contracts.IncomingOutgoing.Genre;
 using LibraryService.API.Contracts.IncomingOutgoing.Publisher;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;

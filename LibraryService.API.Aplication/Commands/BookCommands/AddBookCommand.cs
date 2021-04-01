@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
 using LibraryService.API.Contracts.IncomingOutgoing.Book;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;

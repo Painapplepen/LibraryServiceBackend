@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Contracts.IncomingOutgoing.Book;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -34,10 +35,10 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 return null;
             }
 
-            return await MapToBookDTO(book);
+            return MapToBookDTO(book);
         }
 
-        public async Task<BookDTO> MapToBookDTO(Book book)
+        public BookDTO MapToBookDTO(Book book)
         {
             return new BookDTO()
             {

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Contracts.Outgoing.Book;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.BookQueries
@@ -19,10 +19,18 @@ namespace LibraryService.API.Application.Queries.BookQueries
     public class GetAllBookQueryHandler : IRequestHandler<GetAllBookQuery, IReadOnlyCollection<FoundBookDTO>>
     {
         private readonly IBookService bookService;
-
-        public GetAllBookQueryHandler(IBookService bookService)
+        private readonly IPublisherService publisherService;
+        private readonly IAuthorService authorService;
+        private readonly IGenreService genreService;
+        public GetAllBookQueryHandler(IBookService bookService,
+            IPublisherService publisherService,
+            IAuthorService authorService,
+            IGenreService genreService)
         {
             this.bookService = bookService;
+            this.genreService = genreService;
+            this.publisherService = publisherService;
+            this.authorService = authorService;
         }
 
         public async Task<IReadOnlyCollection<FoundBookDTO>> Handle(GetAllBookQuery request,
@@ -35,32 +43,33 @@ namespace LibraryService.API.Application.Queries.BookQueries
 
         private FoundBookDTO MapToFoundBookDTO(Book book)
         {
-            //var author = authorService.Get(book.AuthorId);
-            //var genre = genreService.Get(book.GenreId);
-            //var publisher = publisherService.Get(book.PublisherId);
+            CancellationToken cancellationToken = default;
+            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
+            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
+            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookDTO
             {
                 Id = book.Id,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                //Author =
-                //{
-                //    Id = book.AuthorId,
-                //    Name = author.Name,
-                //    Surname = author.Surname,
-                //    Patronymic = author.Patronymic
-                //},
-                //Genre =
-                //{
-                //    Id = book.GenreId,
-                //    Name = genre.Name
-                //},
-                //Publisher =
-                //{
-                //    Id = book.PublisherId,
-                //    Name = publisher.Name
-                //}
+                Author =
+                {
+                    Id = book.AuthorId,
+                    Name = author.Name,
+                    Surname = author.Surname,
+                    Patronymic = author.Patronymic
+                },
+                Genre =
+                {
+                    Id = book.GenreId,
+                    Name = genre.Name
+                },
+                Publisher =
+                {
+                    Id = book.PublisherId,
+                    Name = publisher.Name
+                }
             };
         }
 

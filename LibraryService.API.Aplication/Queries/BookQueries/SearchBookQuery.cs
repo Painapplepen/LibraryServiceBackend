@@ -7,6 +7,7 @@ using LibraryService.API.Application.Abstractions;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Book;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -67,36 +68,37 @@ namespace LibraryService.API.Application.Queries.BookQueries
         }
 
         private FoundBookDTO MapToFoundBookDTO(Book book)
-        {   
-            //var author = authorService.Get(book.AuthorId);
-            //var genre = genreService.Get(book.GenreId);
-            //var publisher = publisherService.Get(book.PublisherId);
+        {
+            CancellationToken cancellationToken = default;
+            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
+            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
+            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookDTO
             {
                 Id = book.Id,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                //Author =
-                //{
-                //    Id = book.AuthorId,
-                //    Name = author.Name,
-                //    Surname = author.Surname,
-                //    Patronymic = author.Patronymic
-                //},
-                //Genre =
-                //{
-                //    Id = book.GenreId,
-                //    Name = genre.Name
-                //},
-                //Publisher =
-                //{
-                //    Id = book.PublisherId,
-                //    Name = publisher.Name
-                //}
+                Author =
+                {
+                    Id = book.AuthorId,
+                    Name = author.Name,
+                    Surname = author.Surname,
+                    Patronymic = author.Patronymic
+                },
+                Genre =
+                {
+                    Id = book.GenreId,
+                    Name = genre.Name
+                },
+                Publisher =
+                {
+                    Id = book.PublisherId,
+                    Name = publisher.Name
+                }
             };
         }
-
+        
         private string[] GetFilterValues(ICollection<string> values)
         {
             return values == null

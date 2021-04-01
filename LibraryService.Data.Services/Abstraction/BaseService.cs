@@ -10,7 +10,7 @@ namespace LibraryService.Data.Services.Abstraction
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
-        Task<TEntity> GetAsync(long id, CancellationToken cancellationToken);
+        Task<TEntity> GetAsync(long? id, CancellationToken cancellationToken);
         Task<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<TEntity> InsertAsync(TEntity newEntity);
         Task<TEntity> UpdateAsync(TEntity newEntity);
@@ -29,7 +29,7 @@ namespace LibraryService.Data.Services.Abstraction
             dbSet = dbContext.Set<TEntity>();
         }
 
-        public async Task<TEntity> GetAsync(long id, CancellationToken cancellationToken)
+        public async Task<TEntity> GetAsync(long? id, CancellationToken cancellationToken)
         {
             return await dbSet.FindAsync(id, cancellationToken);
         }

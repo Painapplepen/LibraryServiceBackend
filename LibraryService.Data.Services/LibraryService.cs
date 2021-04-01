@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.EF.SQL;
 using LibraryService.Data.Services.Abstraction;
 using LibraryService.Domain.Core.Entities;
