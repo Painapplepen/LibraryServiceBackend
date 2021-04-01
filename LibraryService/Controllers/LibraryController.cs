@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.LibraryCommands;
 using LibraryService.API.Application.Queries.LibraryQueries;
@@ -59,6 +60,14 @@ namespace LibraryService.API.Host.Controllers
         public async Task<IActionResult> GetLibrary([FromRoute] long id, CancellationToken cancellationToken = default)
         {
             return await ExecuteQueryAsync(new GetLibraryQuery(id), cancellationToken: cancellationToken);
+        }
+
+        [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundLibraryDTO>))]
+        [SwaggerOperation(Summary = "Get all libraries", OperationId = "GetAllLibraries")]
+        public async Task<IActionResult> GetAllLibraries(CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetAllLibraryQuery(), cancellationToken: cancellationToken);
         }
     }
 }

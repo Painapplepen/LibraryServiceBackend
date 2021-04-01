@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.AuthorCommands;
 using LibraryService.API.Application.Queries.AuthorQueries;
@@ -59,6 +60,14 @@ namespace LibraryService.API.Host.Controllers
         public async Task<IActionResult> GetAuthor([FromRoute] long id, CancellationToken cancellationToken = default)
         {
             return await ExecuteQueryAsync(new GetAuthorQuery(id), cancellationToken: cancellationToken);
+        }
+
+        [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundAuthorDTO>))]
+        [SwaggerOperation(Summary = "Get all authors", OperationId = "GetAllAuthors")]
+        public async Task<IActionResult> GetAllAuthors(CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetAllAuthorQuery(), cancellationToken: cancellationToken);
         }
     }
 }

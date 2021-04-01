@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.BookCommands;
 using LibraryService.API.Application.Commands.BookFundCommands;
@@ -64,6 +65,15 @@ namespace LibraryService.API.Host.Controllers
         public async Task<IActionResult> GetBookFund([FromRoute] long id, CancellationToken cancellationToken = default)
         {
             return await ExecuteQueryAsync(new GetBookFundQuery(id), cancellationToken: cancellationToken);
+        }
+
+
+        [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundBookFundDTO>))]
+        [SwaggerOperation(Summary = "Get all book funds", OperationId = "GetAllBookFunds")]
+        public async Task<IActionResult> GetAllBookFunds(CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetAllBookFundQuery(), cancellationToken: cancellationToken);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.GenreCommands;
 using LibraryService.API.Application.Queries.GenreQueries;
@@ -59,6 +60,14 @@ namespace LibraryService.API.Host.Controllers
         public async Task<IActionResult> GetGenre([FromRoute] long id, CancellationToken cancellationToken = default)
         {
             return await ExecuteQueryAsync(new GetGenreQuery(id), cancellationToken: cancellationToken);
+        }
+
+        [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundGenreDTO>))]
+        [SwaggerOperation(Summary = "Get all genres", OperationId = "GetAllGenres")]
+        public async Task<IActionResult> GetAllGenres(CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetAllGenreQuery(), cancellationToken: cancellationToken);
         }
     }
 }

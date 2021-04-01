@@ -1,9 +1,9 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.BookCommands;
 using LibraryService.API.Application.Queries.BookQueries;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
-using LibraryService.API.Contracts.IncomingOutgoing.Admin;
 using LibraryService.API.Contracts.IncomingOutgoing.Book;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Book;
@@ -60,6 +60,14 @@ namespace LibraryService.API.Host.Controllers
         public async Task<IActionResult> GetBook([FromRoute] long id, CancellationToken cancellationToken = default)
         {
             return await ExecuteQueryAsync(new GetBookQuery(id), cancellationToken: cancellationToken);
+        }
+
+        [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundBookDTO>))]
+        [SwaggerOperation(Summary = "Get all books", OperationId = "GetAllBooks")]
+        public async Task<IActionResult> GetAllBooks(CancellationToken cancellationToken = default)
+        {
+            return await ExecuteQueryAsync(new GetAllBookQuery(), cancellationToken: cancellationToken);
         }
     }
 }
