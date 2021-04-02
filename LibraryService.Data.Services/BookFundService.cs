@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.Data.Domain.Models;
@@ -15,7 +16,7 @@ namespace LibraryService.Data.Services
     {
         Task<IReadOnlyCollection<BookFund>> FindAsync(BookFundSearchCondition searchCondition, string sortProperty);
         Task<long> CountAsync(BookFundSearchCondition searchCondition);
-        Task<bool> ExistsAsync(long id);
+        Task<bool> ExistsAsync(long id, CancellationToken cancellationToken);
     }
     public class BookFundService : BaseService<BookFund>, IBookFundService
     {
@@ -37,9 +38,9 @@ namespace LibraryService.Data.Services
             return await query.Page(searchCondition.Page, searchCondition.PageSize).ToListAsync();
         }
 
-        public Task<bool> ExistsAsync(long id)
+        public Task<bool> ExistsAsync(long id, CancellationToken cancellationToken)
         {
-            return dbContext.BookFunds.AnyAsync(entity => entity.Id == id);
+            return dbContext.BookFunds.AnyAsync(entity => entity.Id == id, cancellationToken);
         }
 
 

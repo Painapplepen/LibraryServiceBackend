@@ -97,11 +97,83 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A book amount pages not be less than null..
+        /// </summary>
+        public static string BookAmountPageNotBeLessThanNull {
+            get {
+                return ResourceManager.GetString("BookAmountPageNotBeLessThanNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A book fund amount not be less than null..
+        /// </summary>
+        public static string BookFundAmountNotBeLessThanNull {
+            get {
+                return ResourceManager.GetString("BookFundAmountNotBeLessThanNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The book fund with id &apos;{0}&apos; was not found..
+        /// </summary>
+        public static string BookFundNotFound {
+            get {
+                return ResourceManager.GetString("BookFundNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The book with id &apos;{0}&apos; was not found..
+        /// </summary>
+        public static string BookNotFound {
+            get {
+                return ResourceManager.GetString("BookNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A book title required.
+        /// </summary>
+        public static string BookTitleRequired {
+            get {
+                return ResourceManager.GetString("BookTitleRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A book year not be less than null..
+        /// </summary>
+        public static string BookYearNotBeLessThanNull {
+            get {
+                return ResourceManager.GetString("BookYearNotBeLessThanNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while processing your request..
         /// </summary>
         public static string ErrorProcessingRequest {
             get {
                 return ResourceManager.GetString("ErrorProcessingRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A genre name required.
+        /// </summary>
+        public static string GenreNameRequired {
+            get {
+                return ResourceManager.GetString("GenreNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The genre with id &apos;{0}&apos; was not found..
+        /// </summary>
+        public static string GenreNotFound {
+            get {
+                return ResourceManager.GetString("GenreNotFound", resourceCulture);
             }
         }
         
@@ -120,6 +192,60 @@ namespace LibraryService.API.Resources {
         public static string InvalidSortDirection {
             get {
                 return ResourceManager.GetString("InvalidSortDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A library address required.
+        /// </summary>
+        public static string LibraryAddressRequired {
+            get {
+                return ResourceManager.GetString("LibraryAddressRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A library name required.
+        /// </summary>
+        public static string LibraryNameRequired {
+            get {
+                return ResourceManager.GetString("LibraryNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The library with id &apos;{0}&apos; was not found..
+        /// </summary>
+        public static string LibraryNotFound {
+            get {
+                return ResourceManager.GetString("LibraryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A library telephone required.
+        /// </summary>
+        public static string LibraryTelephoneRequired {
+            get {
+                return ResourceManager.GetString("LibraryTelephoneRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A publisher name required.
+        /// </summary>
+        public static string PublisherNameRequired {
+            get {
+                return ResourceManager.GetString("PublisherNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The publisher with id &apos;{0}&apos; was not found..
+        /// </summary>
+        public static string PublisherNotFound {
+            get {
+                return ResourceManager.GetString("PublisherNotFound", resourceCulture);
             }
         }
         

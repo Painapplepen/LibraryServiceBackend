@@ -1,20 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using LibraryService.API.Application.Commands.AuthorCommands;
+using LibraryService.API.Application.Commands.LibraryCommands;
 using LibraryService.API.Application.Validation.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.Data.Services;
 
-namespace LibraryService.API.Application.Validation.Author
+namespace LibraryService.API.Application.Validation.Library
 {
-    public class UpdateAuthorValidator : AuthorValidatorBase<UpdateAuthorCommand, Response>
+    public class UpdateLibraryValidator : LibraryValidatorBase<UpdateLibraryCommand, Response>
     {
-        private readonly IAuthorService authorService;
+        private readonly ILibraryService libraryService;
 
-        public UpdateAuthorValidator(IAuthorService authorService) : base()
+        public UpdateLibraryValidator(ILibraryService libraryService) : base()
         {
-            this.authorService = authorService;
+            this.libraryService = libraryService;
 
             CreateRules();
         }
@@ -27,12 +27,12 @@ namespace LibraryService.API.Application.Validation.Author
 
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.AuthorNotFound);
+                .WithMessage(Resources.Resources.LibraryNotFound);
         }
 
         private async Task<bool> Exist(long? id, CancellationToken cancellationToken)
         {
-            return id.HasValue && await authorService.ExistsAsync(id.Value, cancellationToken);
+            return id.HasValue && await libraryService.ExistsAsync(id.Value, cancellationToken);
         }
     }
 }

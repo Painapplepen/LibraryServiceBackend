@@ -1,20 +1,22 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using LibraryService.API.Application.Commands.AuthorCommands;
+using LibraryService.API.Application.Commands.BookFundCommands;
 using LibraryService.API.Application.Validation.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.Data.Services;
 
-namespace LibraryService.API.Application.Validation.Author
+namespace LibraryService.API.Application.Validation.BookFund
 {
-    public class UpdateAuthorValidator : AuthorValidatorBase<UpdateAuthorCommand, Response>
+    public class UpdateBookFundValidator : BookFundValidatorBase<UpdateBookFundCommand, Response>
     {
-        private readonly IAuthorService authorService;
+        private readonly IBookFundService bookFundService;
 
-        public UpdateAuthorValidator(IAuthorService authorService) : base()
+        public UpdateBookFundValidator(IBookFundService bookFundService, 
+            IBookService bookService, 
+            ILibraryService libraryService) : base(bookService, libraryService)
         {
-            this.authorService = authorService;
+            this.bookFundService = bookFundService;
 
             CreateRules();
         }
@@ -27,12 +29,12 @@ namespace LibraryService.API.Application.Validation.Author
 
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.AuthorNotFound);
+                .WithMessage(Resources.Resources.BookFundNotFound);
         }
 
         private async Task<bool> Exist(long? id, CancellationToken cancellationToken)
         {
-            return id.HasValue && await authorService.ExistsAsync(id.Value, cancellationToken);
+            return id.HasValue && await bookFundService.ExistsAsync(id.Value, cancellationToken);
         }
     }
 }

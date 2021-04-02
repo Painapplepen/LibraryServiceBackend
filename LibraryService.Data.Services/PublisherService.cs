@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.Data.Domain.Models;
@@ -15,7 +16,7 @@ namespace LibraryService.Data.Services
     {
         Task<IReadOnlyCollection<Publisher>> FindAsync(PublisherSearchCondition searchCondition, string sortProperty);
         Task<long> CountAsync(PublisherSearchCondition searchCondition);
-        Task<bool> ExistsAsync(long id);
+        Task<bool> ExistsAsync(long id, CancellationToken cancellationToken);
     }
     public class PublisherService : BaseService<Publisher>, IPublisherService
     {
@@ -26,9 +27,9 @@ namespace LibraryService.Data.Services
             this.dbContext = dbContext;
         }
 
-        public Task<bool> ExistsAsync(long id)
+        public Task<bool> ExistsAsync(long id, CancellationToken cancellationToken)
         {
-            return dbContext.Publishers.AnyAsync(entity => entity.Id == id);
+            return dbContext.Publishers.AnyAsync(entity => entity.Id == id, cancellationToken);
         }
 
         public async Task<IReadOnlyCollection<Publisher>> FindAsync(PublisherSearchCondition searchCondition, string sortProperty)

@@ -16,6 +16,23 @@ namespace LibraryService.API.Application.Validation.Abstractions
             RuleFor(cmd => cmd.Entity)
                 .NotNull()
                 .WithMessage(cmd => string.Format(Resources.Resources.ValueRequired, nameof(cmd.Entity)));
+
+            RuleFor(cmd => cmd.Entity.Name)
+                .Must(NotBeNullOrWhitespace)
+                .WithMessage(Resources.Resources.LibraryNameRequired);
+
+            RuleFor(cmd => cmd.Entity.Address)
+                .Must(NotBeNullOrWhitespace)
+                .WithMessage(Resources.Resources.LibraryAddressRequired);
+
+            RuleFor(cmd => cmd.Entity.Telephone)
+                .Must(NotBeNullOrWhitespace)
+                .WithMessage(Resources.Resources.LibraryTelephoneRequired);
+        }
+
+        private bool NotBeNullOrWhitespace(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value);
         }
     }
 }

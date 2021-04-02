@@ -18,11 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Validation\BookFund\" />
-    <Folder Include="Validation\Book\" />
-    <Folder Include="Validation\Library\" />
-    <Folder Include="Validation\Genre\" />
-    <Folder Include="Validation\Publisher\" />
   </ItemGroup>
 
 </Project>
