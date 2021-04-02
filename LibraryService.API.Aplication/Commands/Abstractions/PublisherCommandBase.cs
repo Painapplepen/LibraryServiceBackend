@@ -6,7 +6,7 @@ namespace LibraryService.API.Application.Commands.Abstractions
     public class PublisherCommandBase<TResponse> : IRequest<TResponse>
     {
         public PublisherDTO Entity { get; set; }
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         protected PublisherCommandBase(long id, PublisherDTO entity)
         {

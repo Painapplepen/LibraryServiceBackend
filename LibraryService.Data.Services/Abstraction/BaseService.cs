@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.Data.EF.SQL;
 using Microsoft.EntityFrameworkCore;
@@ -9,13 +10,14 @@ namespace LibraryService.Data.Services.Abstraction
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
-        Task<TEntity> GetAsync(long id);
+        Task<TEntity> GetAsync(long? id, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<TEntity> InsertAsync(TEntity newEntity);
         Task<TEntity> UpdateAsync(TEntity newEntity);
-        Task DeleteAsync(long id);
+        Task DeleteAsync(long id, CancellationToken cancellationToken);
     }
 
-    public abstract class BaseService<TEntity> : IBaseService<TEntity>, IDisposable
+    public abstract class BaseService<TEntity> : IBaseService<TEntity>
         where TEntity : class
     {
         private LibraryServiceDbContext dbContext;
@@ -23,55 +25,46 @@ namespace LibraryService.Data.Services.Abstraction
 
         protected BaseService(LibraryServiceDbContext dbContext)
         {
+            this.dbContext = dbContext;
             dbSet = dbContext.Set<TEntity>();
         }
 
-        public async Task<TEntity> GetAsync(long id)
+        public async Task<TEntity> GetAsync(long? id, CancellationToken cancellationToken)
         {
-            return await dbSet.FindAsync(id);
+            return await dbSet.FindAsync(id, cancellationToken);
+        }
+
+        public async Task<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await dbSet.ToListAsync(cancellationToken);
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity)
         {
-            var addEntity = await dbSet.AddAsync(newEntity);
+            await dbSet.AddAsync(newEntity);
             await dbContext.SaveChangesAsync();
-            return addEntity.Entity;
+            return newEntity;
         }
 
         public async Task<TEntity> UpdateAsync(TEntity newEntity)
         {
-            var updateEntity = dbSet.Update(newEntity);
+            if (dbContext.Entry(newEntity).State == EntityState.Detached)
+            {
+                dbSet.Attach(newEntity);
+            }
+
+            dbContext.ChangeTracker.DetectChanges();
             await dbContext.SaveChangesAsync();
-            return updateEntity.Entity;
+            return newEntity;
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(long id, CancellationToken cancellationToken)
         {
-            var entity = await dbSet.FindAsync(id);
+            var entity = await GetAsync(id, cancellationToken);
             if (entity != null)
             {
                 dbSet.Remove(entity);
             }
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    dbContext.DisposeAsync();
-                }
-                disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -88,37 +88,5 @@ namespace LibraryService.API.Host.Controllers.Abstractions
 
             return Ok(response);
         }
-
-        /// <summary>
-        ///     Executes the provided command and returns its result without interpretation.
-        /// </summary>
-        /// <typeparam name="TResult">The type of result produced by the command.</typeparam>
-        /// <param name="command">The command to execute.</param>
-        /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
-        protected Task<TResult> ExecuteCommandRawAsync<TResult>(IRequest<TResult> command, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
-            return mediator.Send(command, cancellationToken);
-        }
-
-        /// <summary>
-        ///     Executes the provided query and returns its result without interpretation.
-        /// </summary>
-        /// <typeparam name="TResult">The type of result produced by the query.</typeparam>
-        /// <param name="query">The query to execute.</param>
-        /// <param name="cancellationToken">A cancellation token to observe while waiting for the task to complete.</param>
-        protected Task<TResult> ExecuteQueryRawAsync<TResult>(IRequest<TResult> query, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
-
-            return mediator.Send(query, cancellationToken);
-        }
     }
 }

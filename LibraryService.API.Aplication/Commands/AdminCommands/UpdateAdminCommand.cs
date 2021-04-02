@@ -24,7 +24,7 @@ namespace LibraryService.API.Application.Commands.AdminCommands
 
         public async Task<AdminDTO> Handle(UpdateAdminCommand request, CancellationToken cancellationToken)
         {
-            var admin = await adminService.GetAsync(request.Id);
+            var admin = await adminService.GetAsync(request.Id, cancellationToken);
 
             var adminToUpdate = MapDTOToAdmin(request.Entity, admin);
 

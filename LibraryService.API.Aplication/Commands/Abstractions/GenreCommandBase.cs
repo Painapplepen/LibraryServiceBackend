@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibraryService.API.Contracts.IncomingOutgoing.Genre;
+﻿using LibraryService.API.Contracts.IncomingOutgoing.Genre;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.Abstractions
@@ -11,7 +6,7 @@ namespace LibraryService.API.Application.Commands.Abstractions
     public class GenreCommandBase<TResponse> : IRequest<TResponse>
     {
         public GenreDTO Entity { get; set; }
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         protected GenreCommandBase(long id, GenreDTO entity)
         {

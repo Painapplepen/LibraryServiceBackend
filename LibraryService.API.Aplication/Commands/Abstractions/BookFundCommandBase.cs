@@ -6,7 +6,7 @@ namespace LibraryService.API.Application.Commands.Abstractions
     public class BookFundCommandBase<TResponse> : IRequest<TResponse>
     {
         public BookFundDTO Entity { get; set; }
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         protected BookFundCommandBase(long id, BookFundDTO entity)
         {

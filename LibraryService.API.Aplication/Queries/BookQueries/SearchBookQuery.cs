@@ -7,6 +7,7 @@ using LibraryService.API.Application.Abstractions;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Book;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -22,10 +23,18 @@ namespace LibraryService.API.Application.Queries.BookQueries
     public class SearchBookQueryHandler : IRequestHandler<SearchBookQuery, PagedResponse<FoundBookDTO>>
     {
         private readonly IBookService bookService;
-
-        public SearchBookQueryHandler(IBookService bookService)
+        private readonly IPublisherService publisherService;
+        private readonly IAuthorService authorService;
+        private readonly IGenreService genreService;
+        public SearchBookQueryHandler(IBookService bookService, 
+                                    IPublisherService publisherService,
+                                    IAuthorService authorService,
+                                    IGenreService genreService)
         {
             this.bookService = bookService;
+            this.genreService = genreService;
+            this.publisherService = publisherService;
+            this.authorService = authorService;
         }
 
         public async Task<PagedResponse<FoundBookDTO>> Handle(SearchBookQuery request, CancellationToken cancellationToken)
@@ -48,7 +57,7 @@ namespace LibraryService.API.Application.Queries.BookQueries
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
             IReadOnlyCollection<Book> foundBook = await bookService.FindAsync(searchCondition, sortProperty);
-            FoundBookDTO[] mappedAuthor = foundBook.Select(MapToFoundBook).ToArray();
+            FoundBookDTO[] mappedAuthor = foundBook.Select(MapToFoundBookDTO).ToArray();
             var totalCount = await bookService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundBookDTO>
@@ -57,9 +66,13 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 TotalCount = totalCount
             };
         }
-        // Check it.
-        public FoundBookDTO MapToFoundBook(Book book)
+
+        private FoundBookDTO MapToFoundBookDTO(Book book)
         {
+            CancellationToken cancellationToken = default;
+            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
+            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
+            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookDTO
             {
                 Id = book.Id,
@@ -69,18 +82,23 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 Author =
                 {
                     Id = book.AuthorId,
-                    Name = book.Author.Name,
-                    Surname = book.Author.Surname,
-                    Patronymic = book.Author.Patronymic
+                    Name = author.Name,
+                    Surname = author.Surname,
+                    Patronymic = author.Patronymic
                 },
                 Genre =
                 {
                     Id = book.GenreId,
-                    Name = book.Genre.Name
+                    Name = genre.Name
+                },
+                Publisher =
+                {
+                    Id = book.PublisherId,
+                    Name = publisher.Name
                 }
             };
         }
-
+        
         private string[] GetFilterValues(ICollection<string> values)
         {
             return values == null

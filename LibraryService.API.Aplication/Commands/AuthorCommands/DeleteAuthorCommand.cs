@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using LibraryService.Data.Services;
 using MediatR;
 
-namespace LibraryService.API.Application.Commands.AdminCommands
+namespace LibraryService.API.Application.Commands.AuthorCommands
 {
     public class DeleteAuthorCommand : IRequest
     {
@@ -26,7 +26,7 @@ namespace LibraryService.API.Application.Commands.AdminCommands
 
         public async Task<Unit> Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
         {
-            await authorService.DeleteAsync(request.Id);
+            await authorService.DeleteAsync(request.Id, cancellationToken);
             return Unit.Value;
         }
     }

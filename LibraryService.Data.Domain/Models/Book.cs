@@ -1,6 +1,4 @@
-﻿using LibraryService.Data.Domain;
-
-namespace LibraryService.Domain.Core.Entities
+﻿namespace LibraryService.Data.Domain.Models
 {
     public class Book : KeyedEntityBase
     {

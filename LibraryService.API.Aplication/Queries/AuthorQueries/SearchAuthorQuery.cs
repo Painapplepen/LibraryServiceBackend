@@ -7,6 +7,7 @@ using LibraryService.API.Application.Abstractions;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Author;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -43,7 +44,7 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
             IReadOnlyCollection<Author> foundAuthor = await authorService.FindAsync(searchCondition, sortProperty);
-            FoundAuthorDTO[] mappedAuthor = foundAuthor.Select(MapToFoundAuthor).ToArray();
+            FoundAuthorDTO[] mappedAuthor = foundAuthor.Select(MapToFoundAuthorDTO).ToArray();
             var totalCount = await authorService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundAuthorDTO>
@@ -53,7 +54,7 @@ namespace LibraryService.API.Application.Queries.AuthorQueries
             };
         }
 
-        public FoundAuthorDTO MapToFoundAuthor(Author author)
+        private FoundAuthorDTO MapToFoundAuthorDTO(Author author)
         {
             return new FoundAuthorDTO
             {

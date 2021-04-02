@@ -7,6 +7,7 @@ using LibraryService.API.Application.Abstractions;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.BookFund;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
@@ -22,10 +23,24 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
     public class SearchBookFundQueryHandler : IRequestHandler<SearchBookFundQuery, PagedResponse<FoundBookFundDTO>>
     {
         private readonly IBookFundService bookFundService;
-
-        public SearchBookFundQueryHandler(IBookFundService bookFundService)
+        private readonly IBookService bookService;
+        private readonly IPublisherService publisherService;
+        private readonly IAuthorService authorService;
+        private readonly IGenreService genreService;
+        private readonly ILibraryService libraryService;
+        public SearchBookFundQueryHandler(IBookFundService bookFundService,
+                                        IPublisherService publisherService,
+                                        IAuthorService authorService,
+                                        IGenreService genreService,
+                                        IBookService bookService,
+                                        ILibraryService libraryService)
         {
             this.bookFundService = bookFundService;
+            this.bookService = bookService;
+            this.genreService = genreService;
+            this.publisherService = publisherService;
+            this.authorService = authorService;
+            this.libraryService = libraryService;
         }
 
         public async Task<PagedResponse<FoundBookFundDTO>> Handle(SearchBookFundQuery request, CancellationToken cancellationToken)
@@ -61,9 +76,15 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                 TotalCount = totalCount
             };
         }
-        // Check it.
-        public FoundBookFundDTO MapToFoundBookFund(BookFund bookFund)
+
+        private FoundBookFundDTO MapToFoundBookFund(BookFund bookFund)
         {
+            CancellationToken cancellationToken = default;
+            var library = libraryService.GetAsync(bookFund.LibraryId, cancellationToken).Result;
+            var book = bookService.GetAsync(bookFund.BookId, cancellationToken).Result;
+            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
+            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
+            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookFundDTO
             {
                 Id = bookFund.Id,
@@ -71,28 +92,33 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                 Book =
                 {
                     Id = bookFund.BookId,
-                    AmountPage = bookFund.Book.AmountPage,
-                    Title = bookFund.Book.Title,
-                    Year = bookFund.Book.Year,
-                    Author = 
+                    AmountPage = book.AmountPage,
+                    Title = book.Title,
+                    Year = book.Year,
+                    Author =
                     {
-                        Id = bookFund.Book.AuthorId,
-                        Name = bookFund.Book.Author.Name,
-                        Surname = bookFund.Book.Author.Surname,
-                        Patronymic = bookFund.Book.Author.Patronymic
+                        Id = book.AuthorId,
+                        Name = author.Name,
+                        Surname = author.Surname,
+                        Patronymic = author.Patronymic
                     },
                     Genre =
                     {
-                        Id = bookFund.Book.GenreId,
-                        Name = bookFund.Book.Genre.Name
+                        Id = book.GenreId,
+                        Name = genre.Name
+                    },
+                    Publisher =
+                    {
+                        Id = book.PublisherId,
+                        Name = publisher.Name
                     }
                 },
                 Library =
                 {
                     Id = bookFund.LibraryId,
-                    Address = bookFund.Library.Address,
-                    Name = bookFund.Library.Name,
-                    Telephone = bookFund.Library.Telephone
+                    Address = library.Address,
+                    Name = library.Name,
+                    Telephone = library.Telephone
                 }
             };
         }

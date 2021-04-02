@@ -1,20 +1,21 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
-using LibraryService.API.Contracts.IncomingOutgoing.Admin;
 using LibraryService.API.Contracts.IncomingOutgoing.Author;
+using LibraryService.API.Contracts.Outgoing.Abstractions;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
 using LibraryService.Domain.Core.Entities;
 using MediatR;
 
-namespace LibraryService.API.Application.Commands.AdminCommands
+namespace LibraryService.API.Application.Commands.AuthorCommands
 {
-    public class UpdateAuthorCommand : AuthorCommandBase<AuthorDTO>
+    public class UpdateAuthorCommand : AuthorCommandBase<Response>
     {
         public UpdateAuthorCommand(long id, AuthorDTO update) : base(id, update) { }
     }
 
-    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDTO>
+    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, Response>
     {
         private readonly IAuthorService authorService;
 
@@ -23,15 +24,25 @@ namespace LibraryService.API.Application.Commands.AdminCommands
             this.authorService = authorService;
         }
 
-        public async Task<AuthorDTO> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
-            var author = await authorService.GetAsync(request.Id);
+            var author = await authorService.GetAsync(request.Id.Value, cancellationToken);
+
+            if (author == null)
+            {
+                return Response.Error;
+            }
 
             var authorToUpdate = MapDTOToAuthor(request.Entity, author);
 
-            var updatedAdmin = await authorService.UpdateAsync(authorToUpdate);
+            var updatedAuthor = await authorService.UpdateAsync(authorToUpdate);
 
-            return MapToAuthorDTO(updatedAdmin);
+            if (updatedAuthor == null)
+            {
+                return Response.Error;
+            }
+
+            return Response.Successful;
         }
 
         public Author MapDTOToAuthor(AuthorDTO authorDTO, Author author)
@@ -42,14 +53,5 @@ namespace LibraryService.API.Application.Commands.AdminCommands
             return author;
         }
 
-        public AuthorDTO MapToAuthorDTO(Author author)
-        {
-            return new AuthorDTO()
-            {
-                Surname = author.Surname,
-                Name = author.Name,
-                Patronymic = author.Patronymic
-            };
-        }
     }
 }

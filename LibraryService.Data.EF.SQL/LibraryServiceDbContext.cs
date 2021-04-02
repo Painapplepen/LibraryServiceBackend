@@ -1,4 +1,5 @@
-﻿using LibraryService.Domain.Core.Entities;
+﻿using LibraryService.Data.Domain.Models;
+using LibraryService.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryService.Data.EF.SQL

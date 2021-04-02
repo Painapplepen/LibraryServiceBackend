@@ -1,5 +1,4 @@
-﻿using LibraryService.API.Contracts.IncomingOutgoing.Admin;
-using LibraryService.API.Contracts.IncomingOutgoing.Author;
+﻿using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.Abstractions
@@ -7,7 +6,7 @@ namespace LibraryService.API.Application.Commands.Abstractions
     public class AuthorCommandBase<TResponse> : IRequest<TResponse>
     {
         public AuthorDTO Entity { get; set; }
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         protected AuthorCommandBase(long id, AuthorDTO entity)
         {
