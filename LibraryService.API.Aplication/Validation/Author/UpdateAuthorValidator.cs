@@ -27,7 +27,7 @@ namespace LibraryService.API.Application.Validation.Author
 
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.AuthorNotFound);
+                .WithMessage(cmd => string.Format(Resources.Resources.AuthorNotFound, cmd.Id));
         }
 
         private async Task<bool> Exist(long? id, CancellationToken cancellationToken)

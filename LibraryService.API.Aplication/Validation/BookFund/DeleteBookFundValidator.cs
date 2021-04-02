@@ -21,7 +21,7 @@ namespace LibraryService.API.Application.Validation.BookFund
         {
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.BookFundNotFound);
+                .WithMessage(cmd => string.Format(Resources.Resources.BookFundNotFound, cmd.Id));
         }
 
         private async Task<bool> Exist(long id, CancellationToken cancellationToken)

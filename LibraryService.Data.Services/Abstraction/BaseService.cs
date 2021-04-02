@@ -61,6 +61,7 @@ namespace LibraryService.Data.Services.Abstraction
         public async Task DeleteAsync(long id, CancellationToken cancellationToken)
         {
             var entity = await GetAsync(id, cancellationToken);
+
             if (entity != null)
             {
                 dbSet.Remove(entity);

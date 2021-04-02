@@ -21,7 +21,7 @@ namespace LibraryService.API.Application.Validation.Library
         {
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.LibraryNotFound);
+                .WithMessage(cmd => string.Format(Resources.Resources.LibraryNotFound, cmd.Id));
         }
 
         private async Task<bool> Exist(long id, CancellationToken cancellationToken)

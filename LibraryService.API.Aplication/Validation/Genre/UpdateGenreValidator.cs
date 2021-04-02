@@ -27,7 +27,7 @@ namespace LibraryService.API.Application.Validation.Genre
 
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.GenreNotFound);
+                .WithMessage(cmd => string.Format(Resources.Resources.GenreNotFound, cmd.Id));
         }
 
         private async Task<bool> Exist(long? id, CancellationToken cancellationToken)

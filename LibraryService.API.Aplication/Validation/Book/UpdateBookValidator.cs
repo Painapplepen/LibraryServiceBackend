@@ -26,11 +26,11 @@ namespace LibraryService.API.Application.Validation.Book
         {
             RuleFor(cmd => cmd.Id)
                .NotNull()
-               .WithMessage(cmd => string.Format(Resources.Resources.ValueRequired, nameof(cmd.Id)));
+               .WithMessage(cmd => string.Format(Resources.Resources.ValueRequired, cmd.Id));
 
             RuleFor(cmd => cmd.Id)
                 .MustAsync(Exist)
-                .WithMessage(Resources.Resources.BookNotFound);
+                .WithMessage(cmd => string.Format(Resources.Resources.BookNotFound, cmd.Id));
         }
 
         private async Task<bool> Exist(long? id, CancellationToken cancellationToken)
