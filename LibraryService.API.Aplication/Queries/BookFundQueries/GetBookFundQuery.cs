@@ -44,8 +44,8 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             return new BookFundDTO()
             {
                 Amount = bookFund.Amount,
-                BookId = bookFund.BookId,
-                LibraryId = bookFund.LibraryId
+                BookId = bookFund.BookId.Value,
+                LibraryId = bookFund.LibraryId.Value
             };
         }
     }

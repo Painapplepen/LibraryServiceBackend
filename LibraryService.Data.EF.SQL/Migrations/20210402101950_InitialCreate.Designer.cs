@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryService.Data.EF.SQL.Migrations
 {
     [DbContext(typeof(LibraryServiceDbContext))]
-    [Migration("20210331071452_updateModelsForNullableProperties")]
-    partial class updateModelsForNullableProperties
+    [Migration("20210402101950_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,25 +21,7 @@ namespace LibraryService.Data.EF.SQL.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Admin", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Admins");
-                });
-
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Author", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Author", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +42,7 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Book", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Book", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,7 +78,7 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.BookFund", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.BookFund", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,16 +94,21 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.Property<long?>("LibraryId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("PublisherId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
                     b.HasIndex("LibraryId");
 
+                    b.HasIndex("PublisherId");
+
                     b.ToTable("BookFunds");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Genre", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Genre", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +123,7 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Library", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Library", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,7 +144,7 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.ToTable("Libraries");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Publisher", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Publisher", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,17 +159,35 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.ToTable("Publishers");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Book", b =>
+            modelBuilder.Entity("LibraryService.Domain.Core.Entities.Admin", b =>
                 {
-                    b.HasOne("LibraryService.Domain.Core.Entities.Author", "Author")
-                        .WithMany()
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+                });
+
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Book", b =>
+                {
+                    b.HasOne("LibraryService.Data.Domain.Models.Author", "Author")
+                        .WithMany("Books")
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("LibraryService.Domain.Core.Entities.Genre", "Genre")
-                        .WithMany()
+                    b.HasOne("LibraryService.Data.Domain.Models.Genre", "Genre")
+                        .WithMany("Books")
                         .HasForeignKey("GenreId");
 
-                    b.HasOne("LibraryService.Domain.Core.Entities.Publisher", "Publisher")
+                    b.HasOne("LibraryService.Data.Domain.Models.Publisher", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId");
 
@@ -193,19 +198,48 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     b.Navigation("Publisher");
                 });
 
-            modelBuilder.Entity("LibraryService.Domain.Core.Entities.BookFund", b =>
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.BookFund", b =>
                 {
-                    b.HasOne("LibraryService.Domain.Core.Entities.Book", "Book")
-                        .WithMany()
+                    b.HasOne("LibraryService.Data.Domain.Models.Book", "Book")
+                        .WithMany("BookFunds")
                         .HasForeignKey("BookId");
 
-                    b.HasOne("LibraryService.Domain.Core.Entities.Library", "Library")
-                        .WithMany()
+                    b.HasOne("LibraryService.Data.Domain.Models.Library", "Library")
+                        .WithMany("BookFunds")
                         .HasForeignKey("LibraryId");
+
+                    b.HasOne("LibraryService.Data.Domain.Models.Publisher", null)
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherId");
 
                     b.Navigation("Book");
 
                     b.Navigation("Library");
+                });
+
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Author", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Book", b =>
+                {
+                    b.Navigation("BookFunds");
+                });
+
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Genre", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Library", b =>
+                {
+                    b.Navigation("BookFunds");
+                });
+
+            modelBuilder.Entity("LibraryService.Data.Domain.Models.Publisher", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

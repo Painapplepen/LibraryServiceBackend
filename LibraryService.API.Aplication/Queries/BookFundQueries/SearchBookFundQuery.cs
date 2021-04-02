@@ -91,31 +91,31 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                 Amount = bookFund.Amount,
                 Book =
                 {
-                    Id = bookFund.BookId,
+                    Id = bookFund.BookId.Value,
                     AmountPage = book.AmountPage,
                     Title = book.Title,
                     Year = book.Year,
                     Author =
                     {
-                        Id = book.AuthorId,
+                        Id = book.AuthorId.Value,
                         Name = author.Name,
                         Surname = author.Surname,
                         Patronymic = author.Patronymic
                     },
                     Genre =
                     {
-                        Id = book.GenreId,
+                        Id = book.GenreId.Value,
                         Name = genre.Name
                     },
                     Publisher =
                     {
-                        Id = book.PublisherId,
+                        Id = book.PublisherId.Value,
                         Name = publisher.Name
                     }
                 },
                 Library =
                 {
-                    Id = bookFund.LibraryId,
+                    Id = bookFund.LibraryId.Value,
                     Address = library.Address,
                     Name = library.Name,
                     Telephone = library.Telephone

@@ -31,7 +31,7 @@ namespace LibraryService.Data.Services.Abstraction
 
         public async Task<TEntity> GetAsync(long? id, CancellationToken cancellationToken)
         {
-            return await dbSet.FindAsync(id, cancellationToken);
+            return await dbSet.FindAsync(new object[] {id}, cancellationToken);
         }
 
         public async Task<IReadOnlyCollection<TEntity>> GetAllAsync(CancellationToken cancellationToken)
@@ -65,6 +65,7 @@ namespace LibraryService.Data.Services.Abstraction
             if (entity != null)
             {
                 dbSet.Remove(entity);
+                await dbContext.SaveChangesAsync();
             }
         }
     }

@@ -68,7 +68,7 @@ namespace LibraryService.API.Host.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("get all")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundBookFundDTO>))]
         [SwaggerOperation(Summary = "Get all book funds", OperationId = "GetAllBookFunds")]
         public async Task<IActionResult> GetAllBookFunds(CancellationToken cancellationToken = default)

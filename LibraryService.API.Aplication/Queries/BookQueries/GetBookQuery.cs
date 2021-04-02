@@ -45,9 +45,9 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                PublisherId = book.PublisherId,
-                GenreId = book.GenreId,
-                AuthorId = book.AuthorId
+                PublisherId = book.PublisherId.Value,
+                GenreId = book.GenreId.Value,
+                AuthorId = book.AuthorId.Value
             };
         }
     }

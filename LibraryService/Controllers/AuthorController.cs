@@ -62,7 +62,7 @@ namespace LibraryService.API.Host.Controllers
             return await ExecuteQueryAsync(new GetAuthorQuery(id), cancellationToken: cancellationToken);
         }
 
-        [HttpGet]
+        [HttpGet("get all")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundAuthorDTO>))]
         [SwaggerOperation(Summary = "Get all authors", OperationId = "GetAllAuthors")]
         public async Task<IActionResult> GetAllAuthors(CancellationToken cancellationToken = default)

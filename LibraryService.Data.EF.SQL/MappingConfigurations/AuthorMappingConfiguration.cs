@@ -15,6 +15,7 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
             builder.Property(c => c.Name).IsRequired().HasMaxLength(24);
             builder.Property(c => c.Surname).IsRequired().HasMaxLength(24);
             builder.Property(c => c.Patronymic).IsRequired().HasMaxLength(24);
+            builder.HasMany(c => c.Books).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

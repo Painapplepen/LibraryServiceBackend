@@ -2,7 +2,7 @@
 
 namespace LibraryService.Data.EF.SQL.Migrations
 {
-    public partial class addAllModelsWithConfiguration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -83,9 +83,9 @@ namespace LibraryService.Data.EF.SQL.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AuthorId = table.Column<long>(type: "bigint", nullable: false),
-                    PublisherId = table.Column<long>(type: "bigint", nullable: false),
-                    GenreId = table.Column<long>(type: "bigint", nullable: false),
+                    AuthorId = table.Column<long>(type: "bigint", nullable: true),
+                    PublisherId = table.Column<long>(type: "bigint", nullable: true),
+                    GenreId = table.Column<long>(type: "bigint", nullable: true),
                     AmountPage = table.Column<long>(type: "bigint", nullable: false),
                     Year = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -97,19 +97,19 @@ namespace LibraryService.Data.EF.SQL.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
                         principalTable: "Publishers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,9 +118,10 @@ namespace LibraryService.Data.EF.SQL.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BookId = table.Column<long>(type: "bigint", nullable: false),
-                    LibraryId = table.Column<long>(type: "bigint", nullable: false),
-                    Amount = table.Column<long>(type: "bigint", nullable: false)
+                    BookId = table.Column<long>(type: "bigint", nullable: true),
+                    LibraryId = table.Column<long>(type: "bigint", nullable: true),
+                    Amount = table.Column<long>(type: "bigint", nullable: false),
+                    PublisherId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -130,13 +131,19 @@ namespace LibraryService.Data.EF.SQL.Migrations
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BookFunds_Libraries_LibraryId",
                         column: x => x.LibraryId,
                         principalTable: "Libraries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BookFunds_Publishers_PublisherId",
+                        column: x => x.PublisherId,
+                        principalTable: "Publishers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -148,6 +155,11 @@ namespace LibraryService.Data.EF.SQL.Migrations
                 name: "IX_BookFunds_LibraryId",
                 table: "BookFunds",
                 column: "LibraryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookFunds_PublisherId",
+                table: "BookFunds",
+                column: "PublisherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_AuthorId",

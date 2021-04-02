@@ -18,6 +18,7 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
             builder.HasOne(c => c.Author).WithMany();
             builder.HasOne(c => c.Genre).WithMany();
             builder.HasOne(c => c.Publisher).WithMany();
+            builder.HasMany(c => c.BookFunds).WithOne(c => c.Book).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

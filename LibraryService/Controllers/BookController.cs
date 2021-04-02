@@ -62,7 +62,7 @@ namespace LibraryService.API.Host.Controllers
             return await ExecuteQueryAsync(new GetBookQuery(id), cancellationToken: cancellationToken);
         }
 
-        [HttpGet]
+        [HttpGet("get all")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundBookDTO>))]
         [SwaggerOperation(Summary = "Get all books", OperationId = "GetAllBooks")]
         public async Task<IActionResult> GetAllBooks(CancellationToken cancellationToken = default)

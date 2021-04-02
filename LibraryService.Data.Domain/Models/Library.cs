@@ -1,9 +1,12 @@
-﻿namespace LibraryService.Data.Domain.Models
+﻿using System.Collections.Generic;
+
+namespace LibraryService.Data.Domain.Models
 {
     public class Library : KeyedEntityBase
     {
         public string Name { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
+        public IList<BookFund> BookFunds { get; set; } = new List<BookFund>();
     }
 }
