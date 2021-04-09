@@ -1,4 +1,6 @@
-﻿using LibraryService.Data.Domain.Models;
+﻿using System.Reflection;
+using LibraryService.Data.Domain.Models;
+using LibraryService.Data.Domain.Views;
 using LibraryService.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +21,7 @@ namespace LibraryService.Data.EF.SQL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

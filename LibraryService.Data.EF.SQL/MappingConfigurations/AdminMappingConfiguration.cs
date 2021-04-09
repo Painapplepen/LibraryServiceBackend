@@ -8,7 +8,6 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
     {
         public void Configure(EntityTypeBuilder<Admin> builder)
         {
-            builder.Property("Admins");
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Login).IsRequired().HasMaxLength(24);

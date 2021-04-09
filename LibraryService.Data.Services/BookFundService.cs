@@ -35,7 +35,7 @@ namespace LibraryService.Data.Services
                 ? query.OrderBy(sortProperty)
                 : query.OrderByDescending(sortProperty);
 
-            return await query.Page(searchCondition.Page, searchCondition.PageSize).ToListAsync();
+            return await query.Page(searchCondition.PageSize, searchCondition.Page).ToListAsync();
         }
 
         public Task<bool> ExistsAsync(long id, CancellationToken cancellationToken)

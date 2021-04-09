@@ -9,11 +9,9 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
     {
         public void Configure(EntityTypeBuilder<Publisher> builder)
         {
-            builder.Property("Library");
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name).IsRequired().HasMaxLength(24);
-            builder.HasMany(c => c.Books).WithOne(c => c.Publisher).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
