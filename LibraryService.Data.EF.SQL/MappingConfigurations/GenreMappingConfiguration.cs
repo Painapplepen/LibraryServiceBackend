@@ -8,11 +8,9 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
     {
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
-            builder.Property("Genre");
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name).IsRequired().HasMaxLength(24);
-            builder.HasMany(c => c.Books).WithOne(c => c.Genre).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

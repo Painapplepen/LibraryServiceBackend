@@ -1,15 +1,19 @@
-﻿using LibraryService.API.Contracts.IncomingOutgoing.Book;
-using LibraryService.API.Contracts.IncomingOutgoing.Library;
-using LibraryService.API.Contracts.Outgoing.Book;
-using LibraryService.API.Contracts.Outgoing.Library;
-
-namespace LibraryService.API.Contracts.Outgoing.BookFund
+﻿namespace LibraryService.API.Contracts.Outgoing.BookFund
 {
     public class FoundBookFundDTO
     {
         public long Id { get; set; }
         public long Amount { get; set; }
-        public FoundBookDTO Book { get; set; }
-        public FoundLibraryDTO Library { get; set; }
+        public string LibraryName { get; set; }
+        public string LibraryAddress { get; set; }
+        public string LibraryTelephone { get; set; }
+        public string BookTitle { get; set; }
+        public long BookAmountPage { get; set; }
+        public long BookYear { get; set; }
+        public string AuthorName { get; set; }
+        public string AuthorSurname { get; set; }
+        public string AuthorPatronymic { get; set; }
+        public string Publisher { get; set; }
+        public string Genre { get; set; }
     }
 }
