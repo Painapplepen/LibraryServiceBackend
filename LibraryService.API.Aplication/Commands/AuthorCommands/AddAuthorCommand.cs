@@ -4,7 +4,6 @@ using LibraryService.API.Application.Commands.Abstractions;
 using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.AuthorCommands

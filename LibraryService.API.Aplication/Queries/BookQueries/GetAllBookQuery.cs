@@ -55,19 +55,19 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 Year = book.Year,
                 Author =
                 {
-                    Id = book.AuthorId.Value,
+                    Id = book.AuthorId,
                     Name = author.Name,
                     Surname = author.Surname,
                     Patronymic = author.Patronymic
                 },
                 Genre =
                 {
-                    Id = book.GenreId.Value,
+                    Id = book.GenreId,
                     Name = genre.Name
                 },
                 Publisher =
                 {
-                    Id = book.PublisherId.Value,
+                    Id = book.PublisherId,
                     Name = publisher.Name
                 }
             };

@@ -6,7 +6,6 @@ using LibraryService.API.Contracts.IncomingOutgoing.Admin;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Admin;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.AdminQueries

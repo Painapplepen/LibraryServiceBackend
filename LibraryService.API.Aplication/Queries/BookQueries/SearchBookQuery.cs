@@ -9,7 +9,7 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Book;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
+using LibraryService.Domain.Core.;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.BookQueries
@@ -81,19 +81,19 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 Year = book.Year,
                 Author =
                 {
-                    Id = book.AuthorId.Value,
+                    Id = book.AuthorId,
                     Name = author.Name,
                     Surname = author.Surname,
                     Patronymic = author.Patronymic
                 },
                 Genre =
                 {
-                    Id = book.GenreId.Value,
+                    Id = book.GenreId,
                     Name = genre.Name
                 },
                 Publisher =
                 {
-                    Id = book.PublisherId.Value,
+                    Id = book.PublisherId,
                     Name = publisher.Name
                 }
             };

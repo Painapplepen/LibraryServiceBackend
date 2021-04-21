@@ -3,8 +3,8 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 
 namespace LibraryService.API.Application.Commands.AdminCommands
 {

@@ -7,8 +7,8 @@ using LibraryService.API.Application.Abstractions;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Admin;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.AdminQueries

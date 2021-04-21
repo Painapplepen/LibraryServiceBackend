@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using LibraryService.API.Application.Commands.Abstractions;
-using LibraryService.API.Application.Commands.AuthorCommands;
-using LibraryService.API.Contracts.IncomingOutgoing.Author;
 using LibraryService.API.Contracts.IncomingOutgoing.Genre;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Commands.GenreCommands

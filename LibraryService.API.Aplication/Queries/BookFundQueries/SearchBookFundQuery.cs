@@ -9,7 +9,6 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.BookFund;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.BookFundQueries
@@ -91,31 +90,31 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                 Amount = bookFund.Amount,
                 Book =
                 {
-                    Id = bookFund.BookId.Value,
+                    Id = bookFund.BookId,
                     AmountPage = book.AmountPage,
                     Title = book.Title,
                     Year = book.Year,
                     Author =
                     {
-                        Id = book.AuthorId.Value,
+                        Id = book.AuthorId,
                         Name = author.Name,
                         Surname = author.Surname,
                         Patronymic = author.Patronymic
                     },
                     Genre =
                     {
-                        Id = book.GenreId.Value,
+                        Id = book.GenreId,
                         Name = genre.Name
                     },
                     Publisher =
                     {
-                        Id = book.PublisherId.Value,
+                        Id = book.PublisherId,
                         Name = publisher.Name
                     }
                 },
                 Library =
                 {
-                    Id = bookFund.LibraryId.Value,
+                    Id = bookFund.LibraryId,
                     Address = library.Address,
                     Name = library.Name,
                     Telephone = library.Telephone

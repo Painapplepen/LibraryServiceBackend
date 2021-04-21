@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using LibraryService.API.Contracts.Outgoing.Publisher;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.PublisherQueries

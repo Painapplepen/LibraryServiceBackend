@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using LibraryService.API.Contracts.IncomingOutgoing.Book;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.BookQueries
@@ -45,9 +44,9 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                PublisherId = book.PublisherId.Value,
-                GenreId = book.GenreId.Value,
-                AuthorId = book.AuthorId.Value
+                PublisherId = book.PublisherId,
+                GenreId = book.GenreId,
+                AuthorId = book.AuthorId
             };
         }
     }

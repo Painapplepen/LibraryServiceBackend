@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.IncomingOutgoing.Admin;
+using LibraryService.Data.Domain.Models;
 using LibraryService.Data.EF.SQL;
 using LibraryService.Data.Services.Abstraction;
-using LibraryService.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 

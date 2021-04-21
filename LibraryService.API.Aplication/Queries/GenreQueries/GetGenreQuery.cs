@@ -5,7 +5,6 @@ using LibraryService.API.Contracts.IncomingOutgoing.Book;
 using LibraryService.API.Contracts.IncomingOutgoing.Genre;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.Entities;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.GenreQueries

@@ -1,5 +1,4 @@
 ﻿using LibraryService.Data.Domain.Models;
-using LibraryService.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
