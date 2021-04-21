@@ -53,23 +53,12 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                Author =
-                {
-                    Id = book.AuthorId.Value,
-                    Name = author.Name,
-                    Surname = author.Surname,
-                    Patronymic = author.Patronymic
-                },
-                Genre =
-                {
-                    Id = book.GenreId.Value,
-                    Name = genre.Name
-                },
-                Publisher =
-                {
-                    Id = book.PublisherId.Value,
-                    Name = publisher.Name
-                }
+                AuthorName = author.Name,
+                AuthorSurname = author.Surname,
+                AuthorPatronymic = author.Patronymic,
+                Genre = genre.Name,
+                Publisher = publisher.Name
+
             };
         }
 
