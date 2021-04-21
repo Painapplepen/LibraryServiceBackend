@@ -9,7 +9,6 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Book;
 using LibraryService.Data.Domain.Models;
 using LibraryService.Data.Services;
-using LibraryService.Domain.Core.;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.BookQueries
