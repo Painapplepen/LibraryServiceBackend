@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using LibraryService.Data.Domain.Models;
-using LibraryService.Data.Domain.Views;
 using LibraryService.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 

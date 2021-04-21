@@ -61,38 +61,18 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             {
                 Id = bookFund.Id,
                 Amount = bookFund.Amount,
-                Book =
-                {
-                    Id = bookFund.BookId.Value,
-                    AmountPage = book.AmountPage,
-                    Title = book.Title,
-                    Year = book.Year,
-                    Author =
-                    {
-                        Id = book.AuthorId.Value,
-                        Name = author.Name,
-                        Surname = author.Surname,
-                        Patronymic = author.Patronymic
-                    },
-                    Genre =
-                    {
-                        Id = book.GenreId.Value,
-                        Name = genre.Name
-                    },
-                    Publisher =
-                    {
-                        Id = book.PublisherId.Value,
-                        Name = publisher.Name
-                    }
-                },
-                Library =
-                {
-                    Id = bookFund.LibraryId.Value,
-                    Address = library.Address,
-                    Name = library.Name,
-                    Telephone = library.Telephone
-                }
-            }; ;
+                BookAmountPage = book.AmountPage,
+                BookTitle = book.Title,
+                BookYear = book.Year,
+                AuthorName = author.Name,
+                AuthorSurname = author.Surname,
+                AuthorPatronymic = author.Patronymic,
+                LibraryAddress = library.Address,
+                LibraryName = library.Name,
+                LibraryTelephone = library.Telephone,
+                Genre = genre.Name,
+                Publisher = publisher.Name
+            };
         }
     }
 }
