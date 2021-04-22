@@ -9,6 +9,7 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Genre;
 using LibraryService.API.Host.Controllers.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +18,7 @@ namespace LibraryService.API.Host.Controllers
 {
     [Route("api/genre")]
     [ApiController]
+    [Authorize]
     public class GenreController : MediatingControllerBase
     {
         public GenreController(IMediator mediator) : base(mediator)
@@ -62,7 +64,7 @@ namespace LibraryService.API.Host.Controllers
             return await ExecuteQueryAsync(new GetGenreQuery(id), cancellationToken: cancellationToken);
         }
 
-        [HttpGet("get all")]
+        [HttpGet("getAll")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundGenreDTO>))]
         [SwaggerOperation(Summary = "Get all genres", OperationId = "GetAllGenres")]
         public async Task<IActionResult> GetAllGenres(CancellationToken cancellationToken = default)

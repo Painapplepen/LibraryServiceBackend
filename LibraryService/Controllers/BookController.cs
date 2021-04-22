@@ -9,6 +9,7 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Book;
 using LibraryService.API.Host.Controllers.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +18,7 @@ namespace LibraryService.API.Host.Controllers
 {
     [Route("api/book")]
     [ApiController]
+    [Authorize]
     public class BookController : MediatingControllerBase
     {
         public BookController(IMediator mediator) : base(mediator)
@@ -62,7 +64,7 @@ namespace LibraryService.API.Host.Controllers
             return await ExecuteQueryAsync(new GetBookQuery(id), cancellationToken: cancellationToken);
         }
 
-        [HttpGet("get all")]
+        [HttpGet("getAll")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundBookDTO>))]
         [SwaggerOperation(Summary = "Get all books", OperationId = "GetAllBooks")]
         public async Task<IActionResult> GetAllBooks(CancellationToken cancellationToken = default)

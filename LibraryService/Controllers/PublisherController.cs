@@ -9,6 +9,7 @@ using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Publisher;
 using LibraryService.API.Host.Controllers.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +18,7 @@ namespace LibraryService.API.Host.Controllers
 {
     [Route("api/publisher")]
     [ApiController]
+    [Authorize]
     public class PublisherController : MediatingControllerBase
     {
         public PublisherController(IMediator mediator) : base(mediator)
@@ -62,7 +64,7 @@ namespace LibraryService.API.Host.Controllers
             return await ExecuteQueryAsync(new GetPublisherQuery(id), cancellationToken: cancellationToken);
         }
 
-        [HttpGet("get all")]
+        [HttpGet("getAll")]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundPublisherDTO>))]
         [SwaggerOperation(Summary = "Get all publishers", OperationId = "GetAllPublishers")]
         public async Task<IActionResult> GetAllPublishers(CancellationToken cancellationToken = default)

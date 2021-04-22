@@ -1,16 +1,14 @@
-﻿using System.Threading;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Threading;
 using System.Threading.Tasks;
-using LibraryService.API.Application.Commands.Abstractions;
-using LibraryService.API.Contracts.Incoming.SearchConditions;
 using LibraryService.API.Contracts.IncomingOutgoing.Admin;
-using LibraryService.API.Contracts.Outgoing.Abstractions;
 using LibraryService.API.Contracts.Outgoing.Admin;
 using LibraryService.Data.Services;
 using MediatR;
 
 namespace LibraryService.API.Application.Queries.AdminQueries
 {
-    public class ExistAdminQuery : IRequest<string>
+    public class ExistAdminQuery : IRequest<FoundAdminDTO>
     {
         public AdminDTO Entity { get; set; }
 
@@ -20,7 +18,7 @@ namespace LibraryService.API.Application.Queries.AdminQueries
         }
     }
 
-    public class ExistAdminQueryHandler : IRequestHandler<ExistAdminQuery, string>
+    public class ExistAdminQueryHandler : IRequestHandler<ExistAdminQuery, FoundAdminDTO>
     {
         private readonly IAdminService adminService;
 
@@ -29,9 +27,24 @@ namespace LibraryService.API.Application.Queries.AdminQueries
             this.adminService = adminService;
         }
 
-        public async Task<string> Handle(ExistAdminQuery request, CancellationToken cancellationToken)
+        public async Task<FoundAdminDTO> Handle(ExistAdminQuery request, CancellationToken cancellationToken)
         {
-            return await adminService.ExistAsync(request.Entity);
+            var tokenSecurity =  await adminService.ExistAsync(request.Entity);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenSecurity);
+            var tokenId =  tokenHandler.WriteToken(token);
+
+            return MapToFoundAdminDTO(tokenId, tokenSecurity.Expires.ToString());
+        }
+
+        private FoundAdminDTO MapToFoundAdminDTO(string idToken, string expiresId)
+        {
+            return new FoundAdminDTO()
+            {
+                IdToken = idToken,
+                ExpiresIn = expiresId
+            };
         }
     }
 }

@@ -18,9 +18,7 @@ namespace LibraryService.Data.Services
 {
     public interface IAdminService : IBaseService<Admin>
     {
-        Task<string> ExistAsync(AdminDTO admin);
-        Task<IReadOnlyCollection<Admin>> FindAsync(AdminSearchCondition searchCondition, string sortProperty);
-        Task<long> CountAsync(AdminSearchCondition searchCondition);
+        Task<SecurityTokenDescriptor> ExistAsync(AdminDTO admin);
     }
     public class AdminService : BaseService<Admin> , IAdminService
     {
@@ -32,7 +30,7 @@ namespace LibraryService.Data.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<string> ExistAsync(AdminDTO adminDTO)
+        public async Task<SecurityTokenDescriptor> ExistAsync(AdminDTO adminDTO)
         {
             if (!await dbContext.Admins.AnyAsync(entity =>
                 entity.Login == adminDTO.Login))
@@ -42,7 +40,7 @@ namespace LibraryService.Data.Services
 
             var admin = await dbContext.Admins.Where(entity => entity.Login == adminDTO.Login).FirstOrDefaultAsync();
 
-            if (admin.Password == adminDTO.Password)
+            if (admin.Password != adminDTO.Password)
             {
                 return null;
             }
@@ -61,43 +59,8 @@ namespace LibraryService.Data.Services
                         new SymmetricSecurityKey(tokenKey),
                         SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
-
-        public async Task<IReadOnlyCollection<Admin>> FindAsync(AdminSearchCondition searchCondition, string sortProperty)
-        {
-            IQueryable<Admin> query = BuildFindQuery(searchCondition);
-
-            query = searchCondition.ListSortDirection == ListSortDirection.Ascending
-                ? query.OrderBy(sortProperty)
-                : query.OrderByDescending(sortProperty);
-
-            return await query.Page(searchCondition.Page, searchCondition.PageSize).ToListAsync();
-        }
-
-        public async Task<long> CountAsync(AdminSearchCondition searchCondition)
-        {
-            IQueryable<Admin> query = BuildFindQuery(searchCondition);
-
-            return await query.LongCountAsync();
-        }
-
-        private IQueryable<Admin> BuildFindQuery(AdminSearchCondition searchCondition)
-        {
-            IQueryable<Admin> query = dbContext.Admins;
-
-            if (searchCondition.Login.Any())
-            {
-                foreach (var loginPerson in searchCondition.Login)
-                {
-                    var upperLoginPerson = loginPerson.ToUpper().Trim();
-                    query = query.Where(x =>
-                        x.Login != null && x.Login.ToUpper().Contains(upperLoginPerson));
-                }
-            }
-
-            return query;
+            
+            return tokenDescriptor;
         }
     }
 }
