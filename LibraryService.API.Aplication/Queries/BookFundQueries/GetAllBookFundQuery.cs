@@ -19,58 +19,37 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
 
     public class GetAllBookFundQueryHandler : IRequestHandler<GetAllBookFundQuery, IReadOnlyCollection<FoundBookFundDTO>>
     {
-        private readonly IBookFundService bookFundService;
-        private readonly IBookService bookService;
-        private readonly IPublisherService publisherService;
-        private readonly IAuthorService authorService;
-        private readonly IGenreService genreService;
-        private readonly ILibraryService libraryService;
-        public GetAllBookFundQueryHandler(IBookFundService bookFundService,
-            IPublisherService publisherService,
-            IAuthorService authorService,
-            IGenreService genreService,
-            IBookService bookService,
-            ILibraryService libraryService)
+        private readonly IBookFundViewService bookFundViewService;
+        public GetAllBookFundQueryHandler(IBookFundViewService bookFundViewService)
         {
-            this.bookFundService = bookFundService;
-            this.bookService = bookService;
-            this.genreService = genreService;
-            this.publisherService = publisherService;
-            this.authorService = authorService;
-            this.libraryService = libraryService;
+            this.bookFundViewService = bookFundViewService;
         }
 
         public async Task<IReadOnlyCollection<FoundBookFundDTO>> Handle(GetAllBookFundQuery request,
             CancellationToken cancellationToken)
         {
-            var bookFunds = await bookFundService.GetAllAsync(cancellationToken);
+            var bookFunds = await bookFundViewService.GetAllAsync(cancellationToken);
 
             return bookFunds.Select(MapToFoundBookFundDTO).ToArray();
         }
 
-        private FoundBookFundDTO MapToFoundBookFundDTO(BookFund bookFund)
+        private FoundBookFundDTO MapToFoundBookFundDTO(BookFundView bookFund)
         {
-            CancellationToken cancellationToken = default;
-            var library = libraryService.GetAsync(bookFund.LibraryId, cancellationToken).Result;
-            var book = bookService.GetAsync(bookFund.BookId, cancellationToken).Result;
-            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
-            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
-            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookFundDTO
             {
                 Id = bookFund.Id,
                 Amount = bookFund.Amount,
-                BookAmountPage = book.AmountPage,
-                BookTitle = book.Title,
-                BookYear = book.Year,
-                AuthorName = author.Name,
-                AuthorSurname = author.Surname,
-                AuthorPatronymic = author.Patronymic,
-                LibraryAddress = library.Address,
-                LibraryName = library.Name,
-                LibraryTelephone = library.Telephone,
-                Genre = genre.Name,
-                Publisher = publisher.Name
+                BookAmountPage = bookFund.BookAmountPage,
+                BookTitle = bookFund.BookTitle,
+                BookYear = bookFund.BookYear,
+                AuthorName = bookFund.AuthorName,
+                AuthorSurname = bookFund.AuthorSurname,
+                AuthorPatronymic = bookFund.AuthorPatronymic,
+                LibraryAddress = bookFund.LibraryAddress,
+                LibraryName = bookFund.LibraryName,
+                LibraryTelephone = bookFund.LibraryTelephone,
+                Genre = bookFund.Genre,
+                Publisher = bookFund.Publisher
             };
         }
     }

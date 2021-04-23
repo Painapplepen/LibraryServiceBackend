@@ -29,21 +29,17 @@ namespace LibraryService.API.Application.Queries.AdminQueries
 
         public async Task<FoundAdminDTO> Handle(ExistAdminQuery request, CancellationToken cancellationToken)
         {
-            var tokenSecurity =  await adminService.ExistAsync(request.Entity);
+            var idToken =  await adminService.ExistAsync(request.Entity);
+            
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenSecurity);
-            var tokenId =  tokenHandler.WriteToken(token);
-
-            return MapToFoundAdminDTO(tokenId, tokenSecurity.Expires.ToString());
+            return MapToFoundAdminDTO(idToken);
         }
 
-        private FoundAdminDTO MapToFoundAdminDTO(string idToken, string expiresId)
+        private FoundAdminDTO MapToFoundAdminDTO(string idToken)
         {
             return new FoundAdminDTO()
             {
-                IdToken = idToken,
-                ExpiresIn = expiresId
+                IdToken = idToken
             };
         }
     }

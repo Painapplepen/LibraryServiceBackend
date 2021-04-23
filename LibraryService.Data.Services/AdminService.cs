@@ -18,7 +18,7 @@ namespace LibraryService.Data.Services
 {
     public interface IAdminService : IBaseService<Admin>
     {
-        Task<SecurityTokenDescriptor> ExistAsync(AdminDTO admin);
+        Task<string> ExistAsync(AdminDTO admin);
     }
     public class AdminService : BaseService<Admin> , IAdminService
     {
@@ -30,7 +30,7 @@ namespace LibraryService.Data.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<SecurityTokenDescriptor> ExistAsync(AdminDTO adminDTO)
+        public async Task<string> ExistAsync(AdminDTO adminDTO)
         {
             if (!await dbContext.Admins.AnyAsync(entity =>
                 entity.Login == adminDTO.Login))
@@ -59,8 +59,9 @@ namespace LibraryService.Data.Services
                         new SymmetricSecurityKey(tokenKey),
                         SecurityAlgorithms.HmacSha256Signature)
             };
-            
-            return tokenDescriptor;
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenId = tokenHandler.WriteToken(token);
+            return tokenId;
         }
     }
 }
