@@ -21,25 +21,10 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
 
     public class SearchBookFundQueryHandler : IRequestHandler<SearchBookFundQuery, PagedResponse<FoundBookFundDTO>>
     {
-        private readonly IBookFundService bookFundService;
-        private readonly IBookService bookService;
-        private readonly IPublisherService publisherService;
-        private readonly IAuthorService authorService;
-        private readonly IGenreService genreService;
-        private readonly ILibraryService libraryService;
-        public SearchBookFundQueryHandler(IBookFundService bookFundService,
-                                        IPublisherService publisherService,
-                                        IAuthorService authorService,
-                                        IGenreService genreService,
-                                        IBookService bookService,
-                                        ILibraryService libraryService)
+        private readonly IBookFundViewService bookFundViewService;
+        public SearchBookFundQueryHandler(IBookFundViewService bookFundViewService)
         {
-            this.bookFundService = bookFundService;
-            this.bookService = bookService;
-            this.genreService = genreService;
-            this.publisherService = publisherService;
-            this.authorService = authorService;
-            this.libraryService = libraryService;
+            this.bookFundViewService = bookFundViewService;
         }
 
         public async Task<PagedResponse<FoundBookFundDTO>> Handle(SearchBookFundQuery request, CancellationToken cancellationToken)
@@ -65,9 +50,9 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             };
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
-            IReadOnlyCollection<BookFund> foundBookFund = await bookFundService.FindAsync(searchCondition, sortProperty);
+            IReadOnlyCollection<BookFundView> foundBookFund = await bookFundViewService.FindAsync(searchCondition, sortProperty);
             FoundBookFundDTO[] mappedBookFund = foundBookFund.Select(MapToFoundBookFund).ToArray();
-            var totalCount = await bookFundService.CountAsync(searchCondition);
+            var totalCount = await bookFundViewService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundBookFundDTO>
             {
@@ -76,29 +61,23 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             };
         }
 
-        private FoundBookFundDTO MapToFoundBookFund(BookFund bookFund)
+        private FoundBookFundDTO MapToFoundBookFund(BookFundView bookFund)
         {
-            CancellationToken cancellationToken = default;
-            var library = libraryService.GetAsync(bookFund.LibraryId, cancellationToken).Result;
-            var book = bookService.GetAsync(bookFund.BookId, cancellationToken).Result;
-            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
-            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
-            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookFundDTO
             {
                 Id = bookFund.Id,
                 Amount = bookFund.Amount,
-                BookAmountPage = book.AmountPage,
-                BookTitle = book.Title,
-                BookYear = book.Year,
-                AuthorName = author.Name,
-                AuthorSurname = author.Surname,
-                AuthorPatronymic = author.Patronymic,
-                Genre = genre.Name,
-                Publisher = publisher.Name,
-                LibraryAddress = library.Address,
-                LibraryName = library.Name,
-                LibraryTelephone = library.Telephone
+                BookAmountPage = bookFund.BookAmountPage,
+                BookTitle = bookFund.BookTitle,
+                BookYear = bookFund.BookYear,
+                AuthorName = bookFund.AuthorName,
+                AuthorSurname = bookFund.AuthorSurname,
+                AuthorPatronymic = bookFund.AuthorPatronymic,
+                Genre = bookFund.Genre,
+                Publisher = bookFund.Publisher,
+                LibraryAddress = bookFund.LibraryAddress,
+                LibraryName = bookFund.LibraryName,
+                LibraryTelephone = bookFund.LibraryTelephone
 
             };
         }
@@ -134,7 +113,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
 
             if (propertyName.Equals("libraryName", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Library.Name);
+                return "Library";
             }
 
             if (propertyName.Equals("libraryTelephone", StringComparison.InvariantCultureIgnoreCase))
@@ -154,12 +133,12 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
 
             if (propertyName.Equals("genre", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Genre.Name);
+                return "Genre";
             }
 
             if (propertyName.Equals("publisher", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Publisher.Name);
+                return "Publisher";
             }
 
             if (propertyName.Equals("bookTitle", StringComparison.InvariantCultureIgnoreCase))
@@ -169,7 +148,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
 
             if (propertyName.Equals("bookAmountPage", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.Year);
+                return nameof(Book.AmountPage);
             }
 
             if (propertyName.Equals("bookYear", StringComparison.InvariantCultureIgnoreCase))

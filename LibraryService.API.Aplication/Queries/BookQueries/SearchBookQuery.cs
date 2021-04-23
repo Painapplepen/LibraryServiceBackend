@@ -21,19 +21,10 @@ namespace LibraryService.API.Application.Queries.BookQueries
 
     public class SearchBookQueryHandler : IRequestHandler<SearchBookQuery, PagedResponse<FoundBookDTO>>
     {
-        private readonly IBookService bookService;
-        private readonly IPublisherService publisherService;
-        private readonly IAuthorService authorService;
-        private readonly IGenreService genreService;
-        public SearchBookQueryHandler(IBookService bookService, 
-                                    IPublisherService publisherService,
-                                    IAuthorService authorService,
-                                    IGenreService genreService)
+        private readonly IBookViewService bookViewService;
+        public SearchBookQueryHandler(IBookViewService bookViewService)
         {
-            this.bookService = bookService;
-            this.genreService = genreService;
-            this.publisherService = publisherService;
-            this.authorService = authorService;
+            this.bookViewService = bookViewService;
         }
 
         public async Task<PagedResponse<FoundBookDTO>> Handle(SearchBookQuery request, CancellationToken cancellationToken)
@@ -55,9 +46,9 @@ namespace LibraryService.API.Application.Queries.BookQueries
             };
 
             var sortProperty = GetSortProperty(searchCondition.SortProperty);
-            IReadOnlyCollection<Book> foundBook = await bookService.FindAsync(searchCondition, sortProperty);
+            IReadOnlyCollection<BookView> foundBook = await bookViewService.FindAsync(searchCondition, sortProperty);
             FoundBookDTO[] mappedAuthor = foundBook.Select(MapToFoundBookDTO).ToArray();
-            var totalCount = await bookService.CountAsync(searchCondition);
+            var totalCount = await bookViewService.CountAsync(searchCondition);
 
             return new PagedResponse<FoundBookDTO>
             {
@@ -66,23 +57,19 @@ namespace LibraryService.API.Application.Queries.BookQueries
             };
         }
 
-        private FoundBookDTO MapToFoundBookDTO(Book book)
+        private FoundBookDTO MapToFoundBookDTO(BookView book)
         {
-            CancellationToken cancellationToken = default;
-            var author = authorService.GetAsync(book.AuthorId, cancellationToken).Result;
-            var genre = genreService.GetAsync(book.GenreId, cancellationToken).Result;
-            var publisher = publisherService.GetAsync(book.PublisherId, cancellationToken).Result;
             return new FoundBookDTO
             {
                 Id = book.Id,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
-                AuthorName = author.Name,
-                AuthorSurname = author.Surname,
-                AuthorPatronymic = author.Patronymic,
-                Genre = genre.Name,
-                Publisher = publisher.Name
+                AuthorName = book.AuthorName,
+                AuthorSurname = book.AuthorSurname,
+                AuthorPatronymic = book.AuthorPatronymic,
+                Genre = book.Genre,
+                Publisher = book.Publisher
             };
         }
         
@@ -117,12 +104,12 @@ namespace LibraryService.API.Application.Queries.BookQueries
 
             if (propertyName.Equals("genre", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Genre.Name);
+                return "Genre";
             }
 
             if (propertyName.Equals("publisher", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Publisher.Name);
+                return "Publisher";
             }
 
             if (propertyName.Equals("Title", StringComparison.InvariantCultureIgnoreCase))
@@ -132,7 +119,7 @@ namespace LibraryService.API.Application.Queries.BookQueries
 
             if (propertyName.Equals("AmountPage", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.Year);
+                return nameof(Book.AmountPage);
             }
 
             if (propertyName.Equals("Year", StringComparison.InvariantCultureIgnoreCase))
