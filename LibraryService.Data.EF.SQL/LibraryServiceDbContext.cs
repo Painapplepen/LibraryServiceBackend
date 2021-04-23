@@ -14,7 +14,7 @@ namespace LibraryService.Data.EF.SQL
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<BookFundView> BookFundViews { get; set; }
-        public DbSet<BookFund> BookViews { get; set; }
+        public DbSet<BookView> BookViews { get; set; }
         public LibraryServiceDbContext(DbContextOptions<LibraryServiceDbContext> options)
             : base(options)
         { }
