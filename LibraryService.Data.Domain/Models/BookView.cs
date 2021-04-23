@@ -1,8 +1,7 @@
 ﻿namespace LibraryService.Data.Domain.Models
 {
-    public class BookView
+    public class BookView : KeyedEntityBase
     {
-        public long Id { get; set; }
         public string Title { get; set; }
         public long AmountPage { get; set; }
         public long Year { get; set; }

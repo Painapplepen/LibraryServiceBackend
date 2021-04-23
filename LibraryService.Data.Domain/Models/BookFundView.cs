@@ -1,8 +1,7 @@
 ﻿namespace LibraryService.Data.Domain.Models
 {
-    public class BookFundView
+    public class BookFundView : KeyedEntityBase
     {
-        public long Id { get; set; }
         public long Amount { get; set; }
         public string LibraryName { get; set; }
         public string LibraryAddress { get; set; }
