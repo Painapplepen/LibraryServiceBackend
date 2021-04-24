@@ -31,6 +31,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
         {
             BookFundSearchCondition searchCondition = new BookFundSearchCondition()
             {
+                ISBN = GetFilterValues(request.SearchCondition.ISBN),
                 BookTitle = GetFilterValues(request.SearchCondition.BookTitle),
                 BookYear = request.SearchCondition.BookYear,
                 BookAmountPage = request.SearchCondition.BookAmountPage,
@@ -94,6 +95,11 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             if (string.IsNullOrWhiteSpace(propertyName))
             {
                 return nameof(BookFund.Id);
+            }
+
+            if (propertyName.Equals("isbn", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return nameof(Book.ISBN);
             }
 
             if (propertyName.Equals("authorName", StringComparison.InvariantCultureIgnoreCase))

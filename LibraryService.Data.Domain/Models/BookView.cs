@@ -3,6 +3,7 @@
     public class BookView : KeyedEntityBase
     {
         public string Title { get; set; }
+        public string ISBN { get; set; }
         public long AmountPage { get; set; }
         public long Year { get; set; }
         public string AuthorName { get; set; }

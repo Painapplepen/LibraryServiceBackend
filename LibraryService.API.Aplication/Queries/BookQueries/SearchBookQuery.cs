@@ -31,6 +31,7 @@ namespace LibraryService.API.Application.Queries.BookQueries
         {
             BookSearchCondition searchCondition = new BookSearchCondition()
             {
+                ISBN = GetFilterValues(request.SearchCondition.ISBN),
                 Title = GetFilterValues(request.SearchCondition.Title),
                 Year = request.SearchCondition.Year,
                 AmountPage = request.SearchCondition.AmountPage,
@@ -62,6 +63,7 @@ namespace LibraryService.API.Application.Queries.BookQueries
             return new FoundBookDTO
             {
                 Id = book.Id,
+                ISBN = book.ISBN,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,
@@ -85,6 +87,11 @@ namespace LibraryService.API.Application.Queries.BookQueries
             if (string.IsNullOrWhiteSpace(propertyName))
             {
                 return nameof(Book.Id);
+            }
+
+            if (propertyName.Equals("isbn", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return nameof(Book.ISBN);
             }
 
             if (propertyName.Equals("authorName", StringComparison.InvariantCultureIgnoreCase))

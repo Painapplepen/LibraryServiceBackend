@@ -10,6 +10,7 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
         {
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.ISBN).IsRequired().HasMaxLength(24);
             builder.Property(c => c.Title).IsRequired().HasMaxLength(24);
             builder.Property(c => c.AmountPage).IsRequired();
             builder.Property(c => c.Year).IsRequired();

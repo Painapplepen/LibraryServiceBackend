@@ -2,6 +2,7 @@
 {
     public class BookFundView : KeyedEntityBase
     {
+        public string ISBN { get; set; }
         public long Amount { get; set; }
         public string LibraryName { get; set; }
         public string LibraryAddress { get; set; }

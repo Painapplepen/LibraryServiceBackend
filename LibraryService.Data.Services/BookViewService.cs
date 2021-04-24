@@ -53,6 +53,16 @@ namespace LibraryService.Data.Services
         {
             IQueryable<BookView> query = dbContext.BookViews;
 
+            if (searchCondition.ISBN.Any())
+            {
+                foreach (var bookTitle in searchCondition.ISBN)
+                {
+                    var upperBookTitle = bookTitle.ToUpper().Trim();
+                    query = query.Where(x =>
+                        x.ISBN != null && x.ISBN.ToUpper().Contains(upperBookTitle));
+                }
+            }
+
             if (searchCondition.Title.Any())
             {
                 foreach (var bookTitle in searchCondition.Title)

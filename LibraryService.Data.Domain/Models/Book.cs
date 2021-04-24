@@ -4,6 +4,7 @@ namespace LibraryService.Data.Domain.Models
 {
     public class Book : KeyedEntityBase
     {
+        public string ISBN { get; set; }
         public string Title { get; set; }
         public long AuthorId { get; set; }
         public Author Author { get; set; }

@@ -2,6 +2,7 @@
 {
     public class BookDTO
     {
+        public string ISBN { get; set; }
         public string Title { get; set; }
         public long AuthorId { get; set; }
         public long PublisherId { get; set; }

@@ -4,6 +4,7 @@ namespace LibraryService.API.Contracts.Incoming.SearchConditions
 {
     public class BookFundSearchCondition : PagedDTOBase
     {
+        public string[] ISBN { get; set; }
         public string[] BookTitle { get; set; }
         public long[] BookAmountPage { get; set; }
         public long[] BookYear { get; set; }

@@ -37,6 +37,7 @@ namespace LibraryService.API.Application.Queries.BookQueries
             return new FoundBookDTO
             {
                 Id = book.Id,
+                ISBN = book.ISBN,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,

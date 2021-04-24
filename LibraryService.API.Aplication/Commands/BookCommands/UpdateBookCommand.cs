@@ -48,6 +48,7 @@ namespace LibraryService.API.Application.Commands.BookCommands
 
         public Book MapDTOToBook(BookDTO bookDTO, Book book)
         {
+            book.ISBN = bookDTO.ISBN;
             book.AmountPage = bookDTO.AmountPage;
             book.Title = bookDTO.Title;
             book.Year = bookDTO.Year;

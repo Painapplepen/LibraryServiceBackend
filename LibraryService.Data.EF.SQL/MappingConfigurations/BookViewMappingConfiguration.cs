@@ -10,6 +10,7 @@ namespace LibraryService.Data.EF.SQL.MappingConfigurations
         {
             builder.HasKey(c => c.Id);
             builder.ToView("View_BookView");
+            builder.Property(v => v.ISBN).HasColumnName("ISBN");
             builder.Property(v => v.Title).HasColumnName("Title");
             builder.Property(v => v.AmountPage).HasColumnName("AmountPage");
             builder.Property(v => v.Year).HasColumnName("Year");

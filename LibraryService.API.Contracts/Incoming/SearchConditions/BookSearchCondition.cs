@@ -4,6 +4,7 @@ namespace LibraryService.API.Contracts.Incoming.SearchConditions
 {
     public class BookSearchCondition : PagedDTOBase
     {
+        public string[] ISBN { get; set; }
         public string[] Title { get; set; }
         public string[] AuthorSurname { get; set; }
         public string[] AuthorPatronymic { get; set; }

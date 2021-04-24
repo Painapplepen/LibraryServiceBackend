@@ -124,6 +124,15 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A book ISBN required..
+        /// </summary>
+        public static string BookISBNRequired {
+            get {
+                return ResourceManager.GetString("BookISBNRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The book with id &apos;{0}&apos; was not found..
         /// </summary>
         public static string BookNotFound {
@@ -133,7 +142,7 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A book title required.
+        ///   Looks up a localized string similar to A book title required..
         /// </summary>
         public static string BookTitleRequired {
             get {
@@ -160,7 +169,7 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A genre name required.
+        ///   Looks up a localized string similar to A genre name required..
         /// </summary>
         public static string GenreNameRequired {
             get {
@@ -196,7 +205,7 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A library address required.
+        ///   Looks up a localized string similar to A library address required..
         /// </summary>
         public static string LibraryAddressRequired {
             get {
@@ -205,7 +214,7 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A library name required.
+        ///   Looks up a localized string similar to A library name required..
         /// </summary>
         public static string LibraryNameRequired {
             get {
@@ -223,7 +232,7 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A library telephone required.
+        ///   Looks up a localized string similar to A library telephone required..
         /// </summary>
         public static string LibraryTelephoneRequired {
             get {
@@ -232,7 +241,7 @@ namespace LibraryService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A publisher name required.
+        ///   Looks up a localized string similar to A publisher name required..
         /// </summary>
         public static string PublisherNameRequired {
             get {

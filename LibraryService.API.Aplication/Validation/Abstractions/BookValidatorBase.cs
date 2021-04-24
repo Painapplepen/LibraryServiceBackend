@@ -30,6 +30,10 @@ namespace LibraryService.API.Application.Validation.Abstractions
                 .NotNull()
                 .WithMessage(cmd => string.Format(Resources.Resources.ValueRequired, nameof(cmd.Entity)));
 
+            RuleFor(cmd => cmd.Entity.ISBN)
+                .Must(NotBeNullOrWhitespace)
+                .WithMessage(Resources.Resources.BookISBNRequired);
+
             RuleFor(cmd => cmd.Entity.Title)
                 .Must(NotBeNullOrWhitespace)
                 .WithMessage(Resources.Resources.BookTitleRequired);

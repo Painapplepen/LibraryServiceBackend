@@ -38,6 +38,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             return new FoundBookFundDTO
             {
                 Id = bookFund.Id,
+                ISBN = bookFund.ISBN,
                 Amount = bookFund.Amount,
                 BookAmountPage = bookFund.BookAmountPage,
                 BookTitle = bookFund.BookTitle,

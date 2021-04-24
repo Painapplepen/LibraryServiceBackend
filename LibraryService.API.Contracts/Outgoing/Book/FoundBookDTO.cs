@@ -7,6 +7,7 @@ namespace LibraryService.API.Contracts.Outgoing.Book
     public class FoundBookDTO
     {
         public long Id { get; set; }
+        public string ISBN { get; set; }
         public string Title { get; set; }
         public long AmountPage { get; set; }
         public long Year { get; set; }

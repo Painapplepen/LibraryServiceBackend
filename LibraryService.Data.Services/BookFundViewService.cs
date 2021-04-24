@@ -76,6 +76,16 @@ namespace LibraryService.Data.Services
                 }
             }
 
+            if (searchCondition.ISBN.Any())
+            {
+                foreach (var bookTitle in searchCondition.ISBN)
+                {
+                    var upperBookTitle = bookTitle.ToUpper().Trim();
+                    query = query.Where(x =>
+                        x.ISBN != null && x.ISBN.ToUpper().Contains(upperBookTitle));
+                }
+            }
+
             if (searchCondition.AuthorName.Any())
             {
                 foreach (var authorName in searchCondition.AuthorName)

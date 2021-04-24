@@ -34,6 +34,7 @@ namespace LibraryService.API.Application.Commands.BookCommands
         {
             return new Book
             {
+                ISBN = book.ISBN,
                 AmountPage = book.AmountPage,
                 Title = book.Title,
                 Year = book.Year,

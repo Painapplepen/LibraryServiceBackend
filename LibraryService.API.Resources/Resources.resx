@@ -138,11 +138,14 @@
   <data name="BookFundNotFound" xml:space="preserve">
     <value>The book fund with id '{0}' was not found.</value>
   </data>
+  <data name="BookISBNRequired" xml:space="preserve">
+    <value>A book ISBN required.</value>
+  </data>
   <data name="BookNotFound" xml:space="preserve">
     <value>The book with id '{0}' was not found.</value>
   </data>
   <data name="BookTitleRequired" xml:space="preserve">
-    <value>A book title required</value>
+    <value>A book title required.</value>
   </data>
   <data name="BookYearNotBeLessThanNull" xml:space="preserve">
     <value>A book year not be less than null.</value>
@@ -151,7 +154,7 @@
     <value>An error occurred while processing your request.</value>
   </data>
   <data name="GenreNameRequired" xml:space="preserve">
-    <value>A genre name required</value>
+    <value>A genre name required.</value>
   </data>
   <data name="GenreNotFound" xml:space="preserve">
     <value>The genre with id '{0}' was not found.</value>
@@ -163,19 +166,19 @@
     <value>Invalid sort direction. Valid values are 'asc' or 'desc'.</value>
   </data>
   <data name="LibraryAddressRequired" xml:space="preserve">
-    <value>A library address required</value>
+    <value>A library address required.</value>
   </data>
   <data name="LibraryNameRequired" xml:space="preserve">
-    <value>A library name required</value>
+    <value>A library name required.</value>
   </data>
   <data name="LibraryNotFound" xml:space="preserve">
     <value>The library with id '{0}' was not found.</value>
   </data>
   <data name="LibraryTelephoneRequired" xml:space="preserve">
-    <value>A library telephone required</value>
+    <value>A library telephone required.</value>
   </data>
   <data name="PublisherNameRequired" xml:space="preserve">
-    <value>A publisher name required</value>
+    <value>A publisher name required.</value>
   </data>
   <data name="PublisherNotFound" xml:space="preserve">
     <value>The publisher with id '{0}' was not found.</value>
