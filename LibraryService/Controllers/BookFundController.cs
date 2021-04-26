@@ -30,6 +30,7 @@ namespace LibraryService.API.Host.Controllers
         { }
 
         [HttpPost("search")]
+        [AllowAnonymous]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(PagedResponse<FoundBookFundDTO>))]
         [SwaggerOperation(Summary = "Search book funds", OperationId = "SearchBookFunds")]
         public async Task<IActionResult> SearchBookFunds([FromBody] BookFundSearchCondition searchCondition, CancellationToken cancellationToken = default)
@@ -71,7 +72,6 @@ namespace LibraryService.API.Host.Controllers
 
 
         [HttpGet("getAll")]
-        [AllowAnonymous]
         [SwaggerResponse(StatusCodes.Status200OK, Type = typeof(IReadOnlyCollection<FoundBookFundDTO>))]
         [SwaggerOperation(Summary = "Get all book funds", OperationId = "GetAllBookFunds")]
         public async Task<IActionResult> GetAllBookFunds(CancellationToken cancellationToken = default)

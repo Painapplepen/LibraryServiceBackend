@@ -67,6 +67,7 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
             return new FoundBookFundDTO
             {
                 Id = bookFund.Id,
+                ISBN = bookFund.ISBN,
                 Amount = bookFund.Amount,
                 BookAmountPage = bookFund.BookAmountPage,
                 BookTitle = bookFund.BookTitle,
@@ -102,34 +103,34 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                 return nameof(Book.ISBN);
             }
 
-            if (propertyName.Equals("authorName", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("name", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Author.Name);
+                return "AuthorName";
             }
 
-            if (propertyName.Equals("authorSurName", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("surname", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Author.Surname);
+                return "AuthorSurname";
             }
 
-            if (propertyName.Equals("authorPatronymic", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("patronymic", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Author.Patronymic);
+                return "AuthorPatronymic";
             }
 
-            if (propertyName.Equals("libraryName", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("library", StringComparison.InvariantCultureIgnoreCase))
             {
-                return "Library";
+                return "LibraryName";
             }
 
-            if (propertyName.Equals("libraryTelephone", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("telephone", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Library.Telephone);
+                return "LibraryTelephone";
             }
 
-            if (propertyName.Equals("libraryAddress", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("address", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Library.Address);
+                return "LibraryAddress";
             }
 
             if (propertyName.Equals("amount", StringComparison.InvariantCultureIgnoreCase))
@@ -147,19 +148,19 @@ namespace LibraryService.API.Application.Queries.BookFundQueries
                 return "Publisher";
             }
 
-            if (propertyName.Equals("bookTitle", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("title", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.Title);
+                return "BookTitle";
             }
 
-            if (propertyName.Equals("bookAmountPage", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("pages", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.AmountPage);
+                return "BookAmountPage";
             }
 
-            if (propertyName.Equals("bookYear", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("year", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.Year);
+                return "BookYear";
             }
 
             return propertyName;

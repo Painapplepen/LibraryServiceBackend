@@ -35,7 +35,7 @@ namespace LibraryService.Data.Services
         {
             IQueryable<BookView> query = BuildFindQuery(searchCondition);
 
-            query = searchCondition.ListSortDirection == ListSortDirection.Ascending
+            query = searchCondition.SortDirection == "asc"
                 ? query.OrderBy(sortProperty)
                 : query.OrderByDescending(sortProperty);
 
@@ -46,7 +46,9 @@ namespace LibraryService.Data.Services
         {
             IQueryable<BookView> query = BuildFindQuery(searchCondition);
 
-            return await query.LongCountAsync();
+            var count  = await query.LongCountAsync();
+
+            return count % 10 == 0 ? count / 10 : count / 10 + 1;
         }
 
         private IQueryable<BookView> BuildFindQuery(BookSearchCondition searchCondition)
@@ -105,7 +107,7 @@ namespace LibraryService.Data.Services
                 }
             }
 
-            if (searchCondition.Year.Any())
+            if (searchCondition.Year != null)
             {
                 foreach (var bookYear in searchCondition.Year)
                 {
@@ -113,7 +115,7 @@ namespace LibraryService.Data.Services
                 }
             }
 
-            if (searchCondition.AmountPage.Any())
+            if (searchCondition.AmountPage != null)
             {
                 foreach (var bookAmountPage in searchCondition.AmountPage)
                 {

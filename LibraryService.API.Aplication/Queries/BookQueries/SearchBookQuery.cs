@@ -94,19 +94,19 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 return nameof(Book.ISBN);
             }
 
-            if (propertyName.Equals("authorName", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("name", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Author.Name);
+                return "AuthorName";
             }
 
-            if (propertyName.Equals("authorSurName", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("surname", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Author.Surname);
+                return "AuthorSurname";
             }
 
-            if (propertyName.Equals("authorPatronymic", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("patronymic", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Author.Patronymic);
+                return "AuthorPatronymic";
             }
 
             if (propertyName.Equals("genre", StringComparison.InvariantCultureIgnoreCase))
@@ -119,19 +119,19 @@ namespace LibraryService.API.Application.Queries.BookQueries
                 return "Publisher";
             }
 
-            if (propertyName.Equals("Title", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("title", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.Title);
+                return "Title";
             }
 
-            if (propertyName.Equals("AmountPage", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("pages", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.AmountPage);
+                return "AmountPage";
             }
 
-            if (propertyName.Equals("Year", StringComparison.InvariantCultureIgnoreCase))
+            if (propertyName.Equals("year", StringComparison.InvariantCultureIgnoreCase))
             {
-                return nameof(Book.Year);
+                return "Year";
             }
 
             return propertyName;

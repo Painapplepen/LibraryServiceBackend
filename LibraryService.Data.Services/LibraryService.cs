@@ -36,7 +36,7 @@ namespace LibraryService.Data.Services
         {
             IQueryable<Library> query = BuildFindQuery(searchCondition);
 
-            query = searchCondition.ListSortDirection == ListSortDirection.Ascending
+            query = searchCondition.SortDirection == "asc"
                 ? query.OrderBy(sortProperty)
                 : query.OrderByDescending(sortProperty);
 
